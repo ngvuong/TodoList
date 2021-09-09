@@ -1,0 +1,1 @@
+(()=>{"use strict";const t=function(t,e,n,a,r=[]){return{getName:()=>t,getNotes:()=>e,getDate:()=>n,getPriority:()=>a,getSubtasks:()=>r,createSubtask:t=>{}}}("task1","test","9/9/2021","!!!"),e=document.querySelector(".view"),n=document.createElement("div");n.textContent=t.getName(),e.appendChild(n)})();
