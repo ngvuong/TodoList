@@ -18,3 +18,5 @@ export function Task(name, notes, date, priority, subtasks = []) {
     createSubtask,
   };
 }
+
+export function createTaskFromInput() {}
