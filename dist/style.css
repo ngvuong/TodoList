@@ -20,8 +20,7 @@ body {
 
 .title {
   display: flex;
-  flex-direction: column;
-  justify-content: center;
+  align-items: center;
   height: 15%;
   font-size: 3rem;
   background-color: rgb(68, 80, 92);
