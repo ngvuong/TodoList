@@ -40,6 +40,10 @@ body {
   margin: 15% 0 0 15%;
 }
 
+.create-btn {
+  margin: 5% 0 0 20%;
+}
+
 .view {
   display: flex;
   flex-direction: column;

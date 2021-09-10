@@ -14,6 +14,7 @@ export function Task(name, notes, date, project, priority, subtasks = []) {
     getName,
     getNotes,
     getDate,
+    getProject,
     getPriority,
     getSubtasks,
     createSubtask,
@@ -21,3 +22,5 @@ export function Task(name, notes, date, project, priority, subtasks = []) {
 }
 
 export function createTaskFromInput() {}
+
+export function taskList() {}

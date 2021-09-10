@@ -5,6 +5,11 @@ export function todayView() {
   heading.textContent = "Today's Tasks";
 
   const addTaskBtn = document.createElement("button");
+  addTaskBtn.textContent = "Add New Task";
 
-  view.append(heading);
+  function renderForm() {
+    const form = document.createElement("form");
+  }
+  addTaskBtn.addEventListener("click", renderForm);
+  view.append(heading, addTaskBtn);
 }
