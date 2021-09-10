@@ -1,7 +1,8 @@
-export function Task(name, notes, date, priority, subtasks = []) {
+export function Task(name, notes, date, project, priority, subtasks = []) {
   const getName = () => name;
   const getNotes = () => notes;
   const getDate = () => date;
+  const getProject = () => project;
   const getPriority = () => priority;
   const getSubtasks = () => subtasks;
 
