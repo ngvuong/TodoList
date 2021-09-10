@@ -19,16 +19,22 @@
           <button class="project-btn create-btn">New Project</button>
         </nav>
         <main class="view">
-          <form class="task-form">
-            <input type="text" name="name" />
-            <textarea name="notes" id="" cols="30" rows="10"></textarea>
-            <input type="date" name="date" />
-            <select name="priority" id="">
-              <option value="!">!</option>
-              <option value="!!">!!</option>
-              <option value="!!!">!!!</option>
-            </select>
-          </form>
+          <div class="form-overlay">
+            <form class="task-form">
+              <h2>Add a New Task</h2>
+              <input type="text" name="name" />
+              <textarea name="notes" id="" cols="30" rows="10"></textarea>
+              <input type="date" name="date" />
+              <select name="priority" id="">
+                <option value="!">!</option>
+                <option value="!!">!!</option>
+                <option value="!!!">!!!</option>
+              </select>
+              <input type="text" name="project" />
+              <button>Submit</button>
+              <input type="button" value="Cancel" class="cancel" />
+            </form>
+          </div>
         </main>
       </div>
     </div>

@@ -9,11 +9,15 @@ export function todayView() {
   btn.classList.add("task-btn");
 
   function renderForm() {
-    const form = document.querySelector(".task-form");
-    form.classList.add("active");
+    const formOverlay = document.querySelector(".task-form");
+    formOverlay.classList.add("active");
+    const cancel = form.lastElementChild;
+    cancel.addEventListener("click", () => console.log("cancelled"), true);
+    console.log(cancel);
   }
 
-  const addTaskBtns = document.querySelectorAll(".task-btn");
-  addTaskBtns.forEach((btn) => addEventListener("click", renderForm));
   view.append(heading, btn);
+  const addTaskBtns = document.querySelectorAll(".task-btn");
+  console.log(addTaskBtns);
+  addTaskBtns.forEach((btn) => btn.addEventListener("click", renderForm));
 }
