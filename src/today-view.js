@@ -8,16 +8,18 @@ export function todayView() {
   btn.textContent = "Add New Task";
   btn.classList.add("task-btn");
 
-  function renderForm() {
-    const formOverlay = document.querySelector(".task-form");
-    formOverlay.classList.add("active");
-    const cancel = form.lastElementChild;
-    cancel.addEventListener("click", () => console.log("cancelled"), true);
-    console.log(cancel);
-  }
+  const formOverlay = document.querySelector(".form-overlay");
+  formOverlay.classList.add("active");
+
+  const cancel = document.querySelector(".cancel");
+  cancel.addEventListener("click", () =>
+    formOverlay.classList.remove("active")
+  );
 
   view.append(heading, btn);
   const addTaskBtns = document.querySelectorAll(".task-btn");
   console.log(addTaskBtns);
-  addTaskBtns.forEach((btn) => btn.addEventListener("click", renderForm));
+  addTaskBtns.forEach((btn) =>
+    btn.addEventListener("click", () => formOverlay.classList.add("active"))
+  );
 }
