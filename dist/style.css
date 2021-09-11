@@ -11,12 +11,12 @@ body {
   display: flex;
   flex-direction: column;
   height: 100%;
+  width: 100vw;
 }
 .grid-container {
   display: grid;
   grid-template-columns: 1fr 4fr;
   height: 100%;
-  width: 100vw;
 }
 
 .title {
@@ -29,7 +29,6 @@ body {
 
 .view-nav {
   width: 70%;
-
   background-color: red;
 }
 
@@ -53,7 +52,7 @@ body {
 
 .form-overlay {
   position: fixed;
-  width: 100vw;
+  width: 110%;
   height: 100%;
   background-color: rgba(0, 0, 0, 0.5);
   opacity: 0;
