@@ -1,3 +1,5 @@
+import { storeTask } from "./storage.js";
+
 export function Task(name, notes, date, priority, project = "No Project") {
   return {
     name,
@@ -16,6 +18,7 @@ export function createTaskFromInput(form) {
   const priority = formFields.priority.value;
   const project = formFields.project.value;
   const task = Task(name, notes, date, priority, project);
+  storeTask.store(task);
   return task;
 }
 

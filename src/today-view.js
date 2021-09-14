@@ -1,4 +1,5 @@
-import { taskList, createTaskFromInput } from "./task.js";
+import { createTaskFromInput } from "./task.js";
+import { storeTask } from "./storage.js";
 
 export function todayView() {
   const view = document.querySelector(".view");
@@ -9,6 +10,8 @@ export function todayView() {
   const btn = document.createElement("button");
   btn.textContent = "Add New Task";
   btn.classList.add("task-btn");
+
+  const tasksList = document.createElement("section");
 
   const formOverlay = document.querySelector(".form-overlay");
   const container = document.querySelector(".container");
@@ -21,10 +24,23 @@ export function todayView() {
   const form = document.querySelector(".task-form");
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    const task = createTaskFromInput(this);
+    createTaskFromInput(this);
     toggleForm(formOverlay, container);
-    console.log(task);
+    renderTasks(tasksList);
+    view.append;
+    form.reset();
   });
+
+  function renderTasks() {
+    tasksList.textContent = "";
+    const tasks = storeTask.tasks;
+    for (let task of tasks) {
+      const div = document.createElement("div");
+      div.textContent = `${task.name} ${task.notes} ${task.priority}`;
+      tasksList.append(div);
+      view.append(tasksList);
+    }
+  }
 
   view.append(heading, btn);
   const addTaskBtns = document.querySelectorAll(".task-btn");
