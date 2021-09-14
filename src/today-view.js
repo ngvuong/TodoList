@@ -10,19 +10,22 @@ export function todayView() {
 
   const formOverlay = document.querySelector(".form-overlay");
   // formOverlay.classList.add("active");
+  const container = document.querySelector(".container");
 
   const cancel = document.querySelector(".cancel");
-  cancel.addEventListener("click", () =>
-    formOverlay.classList.remove("active")
-  );
+  cancel.addEventListener("click", () => {
+    container.style.filter = "none";
+
+    formOverlay.classList.remove("active");
+  });
 
   view.append(heading, btn);
   const addTaskBtns = document.querySelectorAll(".task-btn");
   console.log(addTaskBtns);
   addTaskBtns.forEach((btn) =>
     btn.addEventListener("click", () => {
-      // const container = document.querySelector(".container");
-      // container.style.filter = "blur(5px)";
+      container.style.filter = "blur(5px)";
+      container.style.boxShadow = "0 0 5px 10px";
       formOverlay.classList.add("active");
     })
   );
