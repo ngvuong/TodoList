@@ -1,7 +1,7 @@
 export const storeTask = (() => {
   const tasks = [];
 
-  const store = (task) => tasks.push(task);
+  const store = (...task) => tasks.push(...task);
 
   return { tasks, store };
 })();

@@ -85,3 +85,7 @@ body {
   top: 15%;
   transform: translateY(0);
 }
+
+.form-overlay.expand {
+  position: initial;
+}

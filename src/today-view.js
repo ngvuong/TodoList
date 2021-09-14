@@ -27,9 +27,15 @@ export function todayView() {
     createTaskFromInput(this);
     toggleForm(formOverlay, container);
     renderTasks(tasksList);
-    view.append;
     form.reset();
   });
+
+  const taskItems = document.querySelectorAll(".task-item");
+  taskItems.forEach((task) =>
+    task.addEventListener("click", () => {
+      console.log(this);
+    })
+  );
 
   function renderTasks() {
     tasksList.textContent = "";
@@ -37,14 +43,15 @@ export function todayView() {
     for (let task of tasks) {
       const div = document.createElement("div");
       div.textContent = `${task.name} ${task.notes} ${task.priority}`;
+      div.classList.add("task-item");
       tasksList.append(div);
       view.append(tasksList);
     }
   }
 
   view.append(heading, btn);
+  renderTasks();
   const addTaskBtns = document.querySelectorAll(".task-btn");
-  console.log(addTaskBtns);
   addTaskBtns.forEach((btn) =>
     btn.addEventListener("click", () => {
       toggleForm(formOverlay, container);
