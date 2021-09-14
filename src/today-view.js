@@ -9,7 +9,7 @@ export function todayView() {
   btn.classList.add("task-btn");
 
   const formOverlay = document.querySelector(".form-overlay");
-  formOverlay.classList.add("active");
+  // formOverlay.classList.add("active");
 
   const cancel = document.querySelector(".cancel");
   cancel.addEventListener("click", () =>
@@ -20,6 +20,10 @@ export function todayView() {
   const addTaskBtns = document.querySelectorAll(".task-btn");
   console.log(addTaskBtns);
   addTaskBtns.forEach((btn) =>
-    btn.addEventListener("click", () => formOverlay.classList.add("active"))
+    btn.addEventListener("click", () => {
+      // const container = document.querySelector(".container");
+      // container.style.filter = "blur(5px)";
+      formOverlay.classList.add("active");
+    })
   );
 }
