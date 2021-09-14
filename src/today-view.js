@@ -1,3 +1,5 @@
+import { taskList, createTaskFromInput } from "./task.js";
+
 export function todayView() {
   const view = document.querySelector(".view");
 
@@ -9,14 +11,19 @@ export function todayView() {
   btn.classList.add("task-btn");
 
   const formOverlay = document.querySelector(".form-overlay");
-  // formOverlay.classList.add("active");
   const container = document.querySelector(".container");
 
   const cancel = document.querySelector(".cancel");
   cancel.addEventListener("click", () => {
-    container.style.filter = "none";
+    toggleForm(formOverlay, container);
+  });
 
-    formOverlay.classList.remove("active");
+  const form = document.querySelector(".task-form");
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const task = createTaskFromInput(this);
+    toggleForm(formOverlay, container);
+    console.log(task);
   });
 
   view.append(heading, btn);
@@ -24,9 +31,15 @@ export function todayView() {
   console.log(addTaskBtns);
   addTaskBtns.forEach((btn) =>
     btn.addEventListener("click", () => {
-      container.style.filter = "blur(5px)";
-      container.style.boxShadow = "0 0 5px 10px";
-      formOverlay.classList.add("active");
+      toggleForm(formOverlay, container);
     })
   );
+}
+
+function toggleForm(content, background) {
+  if (!content.classList.contains("active")) {
+    background.style.filter = "blur(5px)";
+    background.style.boxShadow = "0 0 5px 5px";
+  } else background.style.filter = "none";
+  content.classList.toggle("active");
 }
