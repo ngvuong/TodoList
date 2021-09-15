@@ -110,6 +110,10 @@ body {
   width: 100%;
 }
 
-.task-expanded {
+/* .task-expanded {
+  display: block;
+} */
+
+.task-expanded.hidden {
   display: none;
 }

@@ -52,33 +52,28 @@ export function todayView() {
     const name = document.createElement("span");
     const notes = document.createElement("span");
     const priority = document.createElement("span");
+
     taskDiv.classList.add("task-item");
     name.textContent = `${task.name}`;
     notes.textContent = `${task.notes}`;
     priority.textContent = `${task.priority}`;
     taskDiv.append(name, notes, priority);
-    buildExpandedTaskView(task);
-    tasksList.append(taskDiv);
+
+    const expandedTask = buildExpandedTaskView(task);
+    tasksList.append(taskDiv, expandedTask);
     taskDiv.addEventListener("click", expandTask);
     view.append(tasksList);
   }
 
   function buildExpandedTaskView(task) {
-    const taskDiv = document.createElement("div");
-    const name = document.createElement("input");
-    const notes = document.createElement("textarea");
-    const date = document.createElement("input");
-    const priority = document.createElement("select");
-    const lowPriority = document.createElement("option");
-    const medPriority = document.createElement("option");
-    const highPriority = document.createElement("option");
-    const project = document.createElement("input");
-
-    date.type = "date";
-    lowPriority.value = "!";
-    medPriority.value = "!!";
-    highPriority.value = "!!!";
-    priority.append(lowPriority, medPriority, highPriority);
+    // const taskDiv = document.createElement("div");
+    const formClone = form.cloneNode(true);
+    formClone.classList.add("task-expanded", "hidden");
+    const name = formClone.name;
+    const notes = formClone.notes;
+    const date = formClone.date;
+    const priority = formClone.priority;
+    const project = formClone.project;
 
     name.value = task.name;
     notes.value = task.notes;
@@ -86,14 +81,14 @@ export function todayView() {
     priority.value = task.priority;
     project.value = task.project;
 
-    taskDiv.append(name, notes, date, priority, project);
-    return taskDiv;
+    // taskDiv.append(formClone);
+    return formClone;
   }
 
   function expandTask(e) {
-    const div = document.createElement("div");
-    this.append(div);
-    console.log(this);
+    console.log(this.nextElementSibling);
+    this.textContent = "";
+    this.nextElementSibling.classList.remove("hidden", "task-form");
   }
 
   view.append(heading, btn);
