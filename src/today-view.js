@@ -1,5 +1,6 @@
 import { createTaskFromInput } from "./task.js";
 import { storeTask } from "./storage.js";
+import { format } from "date-fns";
 
 export function todayView() {
   const view = document.querySelector(".view");
@@ -69,7 +70,8 @@ export function todayView() {
   function buildExpandedTaskView(task) {
     // const taskDiv = document.createElement("div");
     const formClone = form.cloneNode(true);
-    formClone.classList.add("task-expanded", "hidden");
+    formClone.classList.add("task-expanded");
+    formClone.classList.remove("task-form");
     const name = formClone.name;
     const notes = formClone.notes;
     const date = formClone.date;
@@ -88,8 +90,9 @@ export function todayView() {
 
   function expandTask(e) {
     console.log(this.nextElementSibling);
-    this.classList.add("hidden");
-    this.nextElementSibling.classList.remove("hidden", "task-form");
+    // this.textContent = this.firstChild.textContent;
+    this.classList.toggle("hidden");
+    this.nextElementSibling.classList.toggle("active");
   }
 
   view.append(heading, btn);
@@ -98,6 +101,8 @@ export function todayView() {
   const addTaskBtns = document.querySelectorAll(".task-btn");
   addTaskBtns.forEach((btn) =>
     btn.addEventListener("click", () => {
+      form.date.value = format(new Date(), "yyyy-MM-dd");
+
       toggleForm(formOverlay, container);
     })
   );

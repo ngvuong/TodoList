@@ -63,7 +63,7 @@ body {
 .task-form {
   position: relative;
   width: 50%;
-  height: 50%;
+  /* height: 50%; */
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -90,21 +90,41 @@ textarea {
   transform: translateY(0);
 }
 
-.task-form.expand {
-  position: unset;
-}
-
 .task-item {
   display: flex;
-  justify-content: space-around;
+  justify-content: space-between;
+  border: 1px solid black;
+  margin: 0.1rem 0 0.1rem 0;
   width: 70%;
   color: green;
   background-color: rgba(0, 0, 0, 0.2);
+  height: 1.2em;
 }
 
-.task-item.hidden {
-  display: none;
-  height: 100%;
+.task-item::after {
+  content: "\02304";
+  font-size: 1.2em;
+  line-height: 0.5em;
+}
+
+/* .task-item.hidden {
+  visibility: hidden;
+}
+
+.task-item.hidden:first-child {
+  visibility: visible;
+  justify-content: ;
+} */
+
+.task-item.hidden *:not(:first-child) {
+  visibility: hidden;
+  /* height: 100%; */
+}
+
+.task-item.hidden::after {
+  content: "\02303";
+  line-height: 1.2em;
+  visibility: visible;
 }
 
 .task-list {
@@ -117,16 +137,24 @@ textarea {
 .task-expanded {
   display: flex;
   flex-direction: column;
+  visibility: hidden;
+  width: 70%;
+  height: 0;
+  overflow: hidden;
+  background-color: rgba(0, 0, 0, 0.2);
+
+  transition: all 0.3s ease-in-out;
+}
+.task-expanded.active {
+  visibility: visible;
+  display: flex;
+  flex-direction: column;
   width: 70%;
   height: 100%;
+  /* overflow: hidden; */
   background-color: rgba(0, 0, 0, 0.2);
 }
 
-.task-expanded.hidden {
-  display: none;
-  height: 0;
-  transition: all 3s ease-in-out;
-}
-
-label {
+.task-form * {
+  padding: 0.5em;
 }

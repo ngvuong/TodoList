@@ -28,9 +28,11 @@
         <input id="name" type="text" name="name" />
         <label for="notes">Description</label>
         <textarea name="notes" id="notes" cols="30" rows="5"></textarea>
+        <label for="project">Project</label>
+        <input id="project" type="text" name="project" />
         <div class="form-group">
           <label for="due-date">Due Date</label>
-          <input type="date" id="due-date" name="date" value="2021-09-13" />
+          <input type="date" id="due-date" name="date" />
           <label for="priority">Priority</label>
           <select name="priority" id="priority">
             <option value="!">!</option>
@@ -38,8 +40,6 @@
             <option value="!!!">!!!</option>
           </select>
         </div>
-        <label for="project">Project</label>
-        <input id="project" type="text" name="project" />
         <button name="save">Submit</button>
         <input type="button" value="X" name="cancel" class="cancel" />
       </form>
