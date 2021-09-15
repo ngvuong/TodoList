@@ -12,6 +12,7 @@ export function todayView() {
   btn.classList.add("task-btn");
 
   const tasksList = document.createElement("section");
+  tasksList.classList.add("task-list");
 
   const formOverlay = document.querySelector(".form-overlay");
   const container = document.querySelector(".container");
@@ -24,33 +25,61 @@ export function todayView() {
   const form = document.querySelector(".task-form");
   form.addEventListener("submit", function (e) {
     e.preventDefault();
-    createTaskFromInput(this);
+    const task = createTaskFromInput(this);
+    buildTask(task);
     toggleForm(formOverlay, container);
-    renderTasks(tasksList);
     form.reset();
   });
 
-  const taskItems = document.querySelectorAll(".task-item");
-  taskItems.forEach((task) =>
-    task.addEventListener("click", () => {
-      console.log(this);
-    })
-  );
+  // function buildTasks() {
+  //   tasksList.textContent = "";
+  //   const tasks = storeTask.tasks;
+  //   for (const task of tasks) {
+  //     const peekTask = document.createElement("div");
+  //     // const fullTask = document.createElement("div");
+  //     peekTask.classList.add("task-item");
+  //     peekTask.textContent = `${task.name} ${task.notes} ${task.priority}`;
+  //     // fullTask.append(form);
+  //     // fullTask.classList.add("task-expanded");
+  //     peekTask.addEventListener("click", (e, task) => expandTask(e, task));
+  //     tasksList.append(peekTask);
+  //     view.append(tasksList);
+  //   }
+  // }
 
-  function renderTasks() {
-    tasksList.textContent = "";
-    const tasks = storeTask.tasks;
-    for (let task of tasks) {
-      const div = document.createElement("div");
-      div.textContent = `${task.name} ${task.notes} ${task.priority}`;
-      div.classList.add("task-item");
-      tasksList.append(div);
-      view.append(tasksList);
-    }
+  function buildTask(task) {
+    const taskDiv = document.createElement("div");
+    const name = document.createElement("span");
+    const notes = document.createElement("span");
+    const priority = document.createElement("span");
+    taskDiv.classList.add("task-item");
+    name.textContent = `${task.name}`;
+    notes.textContent = `${task.notes}`;
+    priority.textContent = `${task.priority}`;
+    taskDiv.append(name, notes, priority);
+    tasksList.append(taskDiv);
+    buildExpandedTaskView(task);
+    taskDiv.addEventListener("click", (e) => expandTask(e));
+    view.append(tasksList);
+  }
+
+  function buildExpandedTaskView(task) {}
+
+  function expandTask(e) {
+    const div = document.createElement("div");
+    // const
+    // div.textContent = `${e.target.elements.name}`;
+    console.log(task);
+    // this.appendChild(div);
+
+    // this.innerText = ``;
+    console.log(this);
+    // this.classList.add("expanded");
   }
 
   view.append(heading, btn);
-  renderTasks();
+  // buildTasks();
+
   const addTaskBtns = document.querySelectorAll(".task-btn");
   addTaskBtns.forEach((btn) =>
     btn.addEventListener("click", () => {
