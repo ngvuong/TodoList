@@ -16,7 +16,7 @@ export function createTaskFromInput(form) {
   const notes = formFields.notes.value;
   const date = formFields.date.value;
   const priority = formFields.priority.value;
-  const project = formFields.project.value;
+  const project = formFields.project.value || "No Project";
   const task = Task(name, notes, date, priority, project);
   storeTask.store(task);
   return task;

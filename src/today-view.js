@@ -33,22 +33,6 @@ export function todayView() {
     form.reset();
   });
 
-  // function buildTasks() {
-  //   tasksList.textContent = "";
-  //   const tasks = storeTask.tasks;
-  //   for (const task of tasks) {
-  //     const peekTask = document.createElement("div");
-  //     // const fullTask = document.createElement("div");
-  //     peekTask.classList.add("task-item");
-  //     peekTask.textContent = `${task.name} ${task.notes} ${task.priority}`;
-  //     // fullTask.append(form);
-  //     // fullTask.classList.add("task-expanded");
-  //     peekTask.addEventListener("click", (e, task) => expandTask(e, task));
-  //     tasksList.append(peekTask);
-  //     view.append(tasksList);
-  //   }
-  // }
-
   function buildTask(task) {
     const taskDiv = document.createElement("div");
     const name = document.createElement("span");
@@ -57,7 +41,10 @@ export function todayView() {
 
     taskDiv.classList.add("task-item");
     name.textContent = `${task.name}`;
-    notes.textContent = `${task.notes}`;
+    if (task.notes.length < 30) {
+      notes.textContent = `${task.notes}`;
+    } else {
+    }
     priority.textContent = `${task.priority}`;
     taskDiv.append(name, notes, priority);
 
@@ -88,22 +75,21 @@ export function todayView() {
     return formClone;
   }
 
-  function expandTask(e) {
-    console.log(this.nextElementSibling);
-    // this.textContent = this.firstChild.textContent;
+  function expandTask() {
     this.classList.toggle("hidden");
     this.nextElementSibling.classList.toggle("active");
   }
 
   view.append(heading, btn);
-  // buildTasks();
-
+  for (const task of storeTask.tasks) {
+    buildTask(task);
+  }
   const addTaskBtns = document.querySelectorAll(".task-btn");
   addTaskBtns.forEach((btn) =>
     btn.addEventListener("click", () => {
       form.date.value = format(new Date(), "yyyy-MM-dd");
-
       toggleForm(formOverlay, container);
+      document.querySelector(".task-form #name").focus();
     })
   );
 }

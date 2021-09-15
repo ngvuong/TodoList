@@ -4,25 +4,29 @@
 
 body {
   margin: 0;
-  height: 100vh;
+
+  /* min-height: 200vh; */
 }
 
 .container {
   display: flex;
   flex-direction: column;
-  height: 100%;
-  width: 100vw;
+  min-height: 90vh;
+
+  /* width: 100vw; */
 }
 .grid-container {
   display: grid;
+
   grid-template-columns: 1fr 4fr;
-  height: 100%;
+  min-height: 90vh;
 }
 
 .title {
   display: flex;
   align-items: center;
-  height: 15%;
+
+  height: 10vh;
   font-size: 3rem;
   background-color: rgb(68, 80, 92);
 }
@@ -43,6 +47,10 @@ body {
   margin: 5% 0 0 20%;
 }
 
+.task-btn {
+  margin-bottom: 1rem;
+}
+
 .view {
   display: flex;
   flex-direction: column;
@@ -56,8 +64,8 @@ body {
   height: 100%;
   /* background-color: rgba(0, 0, 0, 0.5); */
   opacity: 0;
-  transform: translateY(-200%);
-  z-index: 1;
+  /* transform: translateY(-200%); */
+  /* z-index: 1; */
 }
 
 .task-form {
@@ -87,7 +95,7 @@ textarea {
 .form-overlay.active {
   opacity: 1;
   top: 15%;
-  transform: translateY(0);
+  /* transform: translateY(0); */
 }
 
 .task-item {
@@ -99,6 +107,10 @@ textarea {
   color: green;
   background-color: rgba(0, 0, 0, 0.2);
   height: 1.2em;
+}
+
+.task-item:hover {
+  background-color: rgba(255, 255, 255, 1);
 }
 
 .task-item::after {
@@ -120,12 +132,12 @@ textarea {
   visibility: hidden;
   /* height: 100%; */
 }
-
+/* 
 .task-item.hidden::after {
   content: "\02303";
   line-height: 1.2em;
   visibility: visible;
-}
+} */
 
 .task-list {
   display: flex;
