@@ -57,24 +57,43 @@ export function todayView() {
     notes.textContent = `${task.notes}`;
     priority.textContent = `${task.priority}`;
     taskDiv.append(name, notes, priority);
-    tasksList.append(taskDiv);
     buildExpandedTaskView(task);
-    taskDiv.addEventListener("click", (e) => expandTask(e));
+    tasksList.append(taskDiv);
+    taskDiv.addEventListener("click", expandTask);
     view.append(tasksList);
   }
 
-  function buildExpandedTaskView(task) {}
+  function buildExpandedTaskView(task) {
+    const taskDiv = document.createElement("div");
+    const name = document.createElement("input");
+    const notes = document.createElement("textarea");
+    const date = document.createElement("input");
+    const priority = document.createElement("select");
+    const lowPriority = document.createElement("option");
+    const medPriority = document.createElement("option");
+    const highPriority = document.createElement("option");
+    const project = document.createElement("input");
+
+    date.type = "date";
+    lowPriority.value = "!";
+    medPriority.value = "!!";
+    highPriority.value = "!!!";
+    priority.append(lowPriority, medPriority, highPriority);
+
+    name.value = task.name;
+    notes.value = task.notes;
+    date.value = task.date;
+    priority.value = task.priority;
+    project.value = task.project;
+
+    taskDiv.append(name, notes, date, priority, project);
+    return taskDiv;
+  }
 
   function expandTask(e) {
     const div = document.createElement("div");
-    // const
-    // div.textContent = `${e.target.elements.name}`;
-    console.log(task);
-    // this.appendChild(div);
-
-    // this.innerText = ``;
+    this.append(div);
     console.log(this);
-    // this.classList.add("expanded");
   }
 
   view.append(heading, btn);
