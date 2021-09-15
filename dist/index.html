@@ -24,17 +24,24 @@
     <div class="form-overlay">
       <form class="task-form">
         <h2>Add a New Task</h2>
-        <input type="text" name="name" />
-        <textarea name="notes" id="" cols="30" rows="10"></textarea>
-        <input type="date" name="date" value="2021-09-13" />
-        <select name="priority" id="">
-          <option value="!">!</option>
-          <option value="!!">!!</option>
-          <option value="!!!">!!!</option>
-        </select>
-        <input type="text" name="project" />
-        <button>Submit</button>
-        <input type="button" value="X" class="cancel" />
+        <label for="name">Task Name</label>
+        <input id="name" type="text" name="name" />
+        <label for="notes">Description</label>
+        <textarea name="notes" id="notes" cols="30" rows="5"></textarea>
+        <div class="form-group">
+          <label for="due-date">Due Date</label>
+          <input type="date" id="due-date" name="date" value="2021-09-13" />
+          <label for="priority">Priority</label>
+          <select name="priority" id="priority">
+            <option value="!">!</option>
+            <option value="!!">!!</option>
+            <option value="!!!">!!!</option>
+          </select>
+        </div>
+        <label for="project">Project</label>
+        <input id="project" type="text" name="project" />
+        <button name="save">Submit</button>
+        <input type="button" value="X" name="cancel" class="cancel" />
       </form>
     </div>
     <script src="main.js"></script>

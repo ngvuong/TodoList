@@ -20,6 +20,7 @@ export function todayView() {
   const cancel = document.querySelector(".cancel");
   cancel.addEventListener("click", () => {
     toggleForm(formOverlay, container);
+    form.reset();
   });
 
   const form = document.querySelector(".task-form");
@@ -87,7 +88,7 @@ export function todayView() {
 
   function expandTask(e) {
     console.log(this.nextElementSibling);
-    this.textContent = "";
+    this.classList.add("hidden");
     this.nextElementSibling.classList.remove("hidden", "task-form");
   }
 
