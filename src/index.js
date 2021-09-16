@@ -12,8 +12,12 @@ import { storeTask } from "./storage";
   navBtns.forEach((btn) => btn.addEventListener("click", renderView));
 
   function renderView() {
-    const page = 
+    const page = this.textContent;
+    if (page === "Today") {
+      todayView();
+    } else if (page === "Tasks") {
+      tasksView();
+    }
   }
   todayView();
-  tasksView();
 })();

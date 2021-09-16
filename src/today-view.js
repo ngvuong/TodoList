@@ -1,10 +1,11 @@
-import { createTaskFromInput } from "./task.js";
-import { storeTask } from "./storage.js";
+import { createTaskFromInput } from "./task";
+import { storeTask } from "./storage";
+import { buildTaskView, buildExpandedTaskView } from "./buildTask";
 import { format } from "date-fns";
 
 export function todayView() {
   const view = document.querySelector(".view");
-
+  view.textContent = "";
   const heading = document.createElement("h1");
   heading.textContent = "Today's Tasks";
 
@@ -28,66 +29,66 @@ export function todayView() {
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     const task = createTaskFromInput(this);
-    buildTask(task);
+    buildTaskView(task);
     toggleForm(formOverlay, container);
     form.reset();
   });
 
-  function buildTask(task) {
-    const taskDiv = document.createElement("div");
-    const name = document.createElement("span");
-    const notes = document.createElement("span");
-    const priority = document.createElement("span");
+  // function buildTask(task) {
+  //   const taskDiv = document.createElement("div");
+  //   const name = document.createElement("span");
+  //   const notes = document.createElement("span");
+  //   const priority = document.createElement("span");
 
-    taskDiv.classList.add("task-item");
-    name.textContent = `${task.name}`;
-    if (task.notes.length < 30) {
-      notes.textContent = `${task.notes}`;
-    } else {
-      notes.textContent = `${task.notes.slice(0, 28)}...`;
-    }
-    priority.textContent = `${task.priority}`;
-    taskDiv.append(name, notes, priority);
+  //   taskDiv.classList.add("task-item");
+  //   name.textContent = `${task.name}`;
+  //   if (task.notes.length < 30) {
+  //     notes.textContent = `${task.notes}`;
+  //   } else {
+  //     notes.textContent = `${task.notes.slice(0, 28)}...`;
+  //   }
+  //   priority.textContent = `${task.priority}`;
+  //   taskDiv.append(name, notes, priority);
 
-    const expandedTask = buildExpandedTaskView(task);
-    tasksList.append(taskDiv, expandedTask);
-    taskDiv.addEventListener("click", expandTask);
-    view.append(tasksList);
-  }
+  //   const expandedTask = buildExpandedTaskView(task);
+  //   tasksList.append(taskDiv, expandedTask);
+  //   taskDiv.addEventListener("click", expandTask);
+  //   view.append(tasksList);
+  // }
 
-  function buildExpandedTaskView(task) {
-    // const taskDiv = document.createElement("div");
-    const formClone = form.cloneNode(true);
-    formClone.classList.add("task-expanded");
-    formClone.classList.remove("task-form");
-    const name = formClone.name;
-    const notes = formClone.notes;
-    const date = formClone.date;
-    const priority = formClone.priority;
-    const project = formClone.project;
+  // function buildExpandedTaskView(task) {
+  //   // const taskDiv = document.createElement("div");
+  //   const formClone = form.cloneNode(true);
+  //   formClone.classList.add("task-expanded");
+  //   formClone.classList.remove("task-form");
+  //   const name = formClone.name;
+  //   const notes = formClone.notes;
+  //   const date = formClone.date;
+  //   const priority = formClone.priority;
+  //   const project = formClone.project;
 
-    name.value = task.name;
-    notes.value = task.notes;
-    date.value = task.date;
-    priority.value = task.priority;
-    project.value = task.project;
+  //   name.value = task.name;
+  //   notes.value = task.notes;
+  //   date.value = task.date;
+  //   priority.value = task.priority;
+  //   project.value = task.project;
 
-    formClone.firstElementChild.remove();
-    formClone.lastElementChild.remove();
-    console.log(task === storeTask.tasks[1]);
-    // taskDiv.append(formClone);
-    return formClone;
-  }
+  //   formClone.firstElementChild.remove();
+  //   formClone.lastElementChild.remove();
+  //   console.log(task === storeTask.tasks[1]);
+  //   // taskDiv.append(formClone);
+  //   return formClone;
+  // }
 
-  function expandTask() {
-    this.classList.toggle("hidden");
-    this.nextElementSibling.classList.toggle("active");
-    console.log(storeTask.tasks);
-  }
+  // function expandTask() {
+  //   this.classList.toggle("hidden");
+  //   this.nextElementSibling.classList.toggle("active");
+  //   console.log(storeTask.tasks);
+  // }
 
   view.append(heading, btn);
   for (const task of storeTask.tasks) {
-    buildTask(task);
+    buildTaskView(task);
   }
   const addTaskBtns = document.querySelectorAll(".task-btn");
   addTaskBtns.forEach((btn) =>
@@ -97,12 +98,11 @@ export function todayView() {
       document.querySelector(".task-form #name").focus();
     })
   );
-}
-
-function toggleForm(content, background) {
-  if (!content.classList.contains("active")) {
-    background.style.filter = "blur(5px)";
-    background.style.boxShadow = "0 0 5px 5px";
-  } else background.style.filter = "none";
-  content.classList.toggle("active");
+  function toggleForm(content, background) {
+    if (!content.classList.contains("active")) {
+      background.style.filter = "blur(5px)";
+      background.style.boxShadow = "0 0 5px 5px";
+    } else background.style.filter = "none";
+    content.classList.toggle("active");
+  }
 }

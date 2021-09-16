@@ -4,6 +4,7 @@ export function tasksView() {
   const dates = [...new Set(storeTask.tasks.map((task) => task.date))];
   const tasks = storeTask.tasks;
   const view = document.querySelector(".view");
+  view.textContent = "";
 
   const tasksByDate = tasks.reduce((acc, task) => {
     if (acc[task.date]) {
@@ -17,11 +18,11 @@ export function tasksView() {
 
   for (const date in tasksByDate) {
     const group = document.createElement("div");
+    group.textContent = date;
     tasksByDate[date].forEach((task) => {
       const taskItem = document.createElement("div");
-      group.append(taskItem);
+      taskItem.textContent = group.append(taskItem);
     });
     view.append(group);
   }
-  console.log(view.innerHTML);
 }
