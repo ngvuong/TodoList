@@ -77,6 +77,13 @@ export function todayView() {
 
   function expandTask() {
     this.classList.toggle("hidden");
+    // const expandedTasks = document.querySelectorAll(".task-expanded");
+    // expandedTasks.forEach((task) => {
+    //   if (task !== this.nextElementSibling) {
+    //     task.classList.remove("active");
+    //     // task.classList.toggle("hidden");
+    //   }
+    // });
     this.nextElementSibling.classList.toggle("active");
   }
 
