@@ -44,7 +44,7 @@ export function todayView() {
     if (task.notes.length < 30) {
       notes.textContent = `${task.notes}`;
     } else {
-      notes.textContent = `${task.notes.slice(0, 28)}..`;
+      notes.textContent = `${task.notes.slice(0, 28)}...`;
     }
     priority.textContent = `${task.priority}`;
     taskDiv.append(name, notes, priority);
@@ -82,6 +82,7 @@ export function todayView() {
   function expandTask() {
     this.classList.toggle("hidden");
     this.nextElementSibling.classList.toggle("active");
+    console.log(storeTask.tasks);
   }
 
   view.append(heading, btn);
