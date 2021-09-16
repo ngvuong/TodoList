@@ -24,26 +24,39 @@
     <div class="form-overlay">
       <form class="task-form">
         <h2>Add a New Task</h2>
-        <label for="name">Task Name</label>
-        <input id="name" type="text" name="name" />
-        <label for="notes">Description</label>
-        <textarea name="notes" id="notes" cols="21" rows="5"></textarea>
-        <label for="project">Project</label>
-        <input
-          id="project"
-          type="text"
-          name="project"
-          placeholder="No Project"
-        />
-        <div class="form-group">
-          <label for="due-date">Due Date</label>
-          <input type="date" id="due-date" name="date" />
-          <label for="priority">Priority</label>
-          <select name="priority" id="priority">
-            <option value="!">!</option>
-            <option value="!!">!!</option>
-            <option value="!!!">!!!</option>
-          </select>
+        <div class="form-info">
+          <div class="info-group">
+            <label for="name"
+              >Task Name <br /><input id="name" type="text" name="name"
+            /></label>
+            <label for="notes"
+              >Description <br /><textarea
+                name="notes"
+                id="notes"
+                cols="21"
+                rows="5"
+              ></textarea>
+            </label>
+            <label for="project"
+              >Project <br /><input
+                id="project"
+                type="text"
+                name="project"
+                placeholder="No Project"
+            /></label>
+          </div>
+          <div class="info-group">
+            <label for="due-date"
+              >Due Date <br /><input type="date" id="due-date" name="date"
+            /></label>
+            <label for="priority"
+              >Priority <br /><select name="priority" id="priority">
+                <option value="!">!</option>
+                <option value="!!">!!</option>
+                <option value="!!!">!!!</option>
+              </select></label
+            >
+          </div>
         </div>
         <button name="save">Submit</button>
         <input type="button" value="X" name="cancel" class="cancel" />
