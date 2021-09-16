@@ -1,7 +1,9 @@
 * {
   box-sizing: border-box;
 }
-
+html {
+  overflow-y: scroll;
+}
 body {
   margin: 0;
   /* overflow: auto; */
@@ -15,7 +17,6 @@ body {
   display: flex;
   flex-direction: column;
   /* min-height: 90vh; */
-
   /* width: 100vw; */
 }
 .grid-container {
@@ -103,14 +104,15 @@ textarea {
 }
 
 .task-item {
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  grid-template-columns: 1.5fr 2fr 0.5fr 1em;
+  /* justify-content: space-between; */
   border: 1px solid black;
   margin: 0.1rem 0 0.1rem 0;
   width: 70%;
   color: green;
   background-color: rgba(0, 0, 0, 0.2);
-  /* height: 1.2em; */
+  height: 1.2em;
 }
 
 .task-item:hover {
@@ -119,28 +121,35 @@ textarea {
 
 .task-item::after {
   content: "\02304";
-  /* font-size: 1.2em; */
+  font-size: 1.2em;
   line-height: 0.5em;
 }
 
-/* .task-item.hidden {
-  visibility: hidden;
+.task-item.hidden {
+  grid-template-columns: 1fr 1em;
+}
+.task-item.hidden * {
+  /* visibility: hidden; */
+  display: none;
 }
 
-.task-item.hidden:first-child {
-  visibility: visible;
-  justify-content: ;
-} */
+.task-item.hidden *:first-child {
+  display: inline;
+  margin: auto;
+}
 
 .task-item.hidden *:not(:first-child) {
-  visibility: hidden;
+  /* visibility: hidden; */
+  display: none;
   /* height: 100%; */
 }
 
 .task-item.hidden::after {
   content: "\02303";
   line-height: 1.2em;
-  visibility: visible;
+  /* visibility: visible; */
+  /* position: fixed;
+  right: 1em; */
 }
 
 .task-list {
@@ -165,6 +174,7 @@ textarea {
   position: static;
   display: flex;
   flex-direction: column;
+  align-items: center;
   opacity: 1;
   width: 70%;
   max-height: 100%;

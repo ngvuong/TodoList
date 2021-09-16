@@ -44,6 +44,7 @@ export function todayView() {
     if (task.notes.length < 30) {
       notes.textContent = `${task.notes}`;
     } else {
+      notes.textContent = `${task.notes.slice(0, 28)}..`;
     }
     priority.textContent = `${task.priority}`;
     taskDiv.append(name, notes, priority);
@@ -71,19 +72,15 @@ export function todayView() {
     priority.value = task.priority;
     project.value = task.project;
 
+    formClone.firstElementChild.remove();
+    formClone.lastElementChild.remove();
+
     // taskDiv.append(formClone);
     return formClone;
   }
 
   function expandTask() {
     this.classList.toggle("hidden");
-    // const expandedTasks = document.querySelectorAll(".task-expanded");
-    // expandedTasks.forEach((task) => {
-    //   if (task !== this.nextElementSibling) {
-    //     task.classList.remove("active");
-    //     // task.classList.toggle("hidden");
-    //   }
-    // });
     this.nextElementSibling.classList.toggle("active");
   }
 
