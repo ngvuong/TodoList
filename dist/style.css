@@ -167,7 +167,7 @@ textarea {
   width: 70%;
   max-height: 0;
   overflow: hidden;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: yellow;
   transition: max-height 0.3s linear;
 }
 .task-expanded.active {
@@ -196,4 +196,9 @@ textarea {
 
 .info-group:last-child {
   align-self: center;
+}
+
+.task-expanded.active input {
+  background-color: yellow;
+  border: none;
 }

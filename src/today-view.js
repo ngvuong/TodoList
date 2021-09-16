@@ -74,7 +74,7 @@ export function todayView() {
 
     formClone.firstElementChild.remove();
     formClone.lastElementChild.remove();
-
+    console.log(task === storeTask.tasks[1]);
     // taskDiv.append(formClone);
     return formClone;
   }
