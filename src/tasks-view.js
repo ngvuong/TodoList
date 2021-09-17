@@ -1,7 +1,9 @@
 import { storeTask } from "./storage";
+import { buildTaskView } from "./buildTask";
 
 export function tasksView() {
-  const dates = [...new Set(storeTask.tasks.map((task) => task.date))];
+  const heading = document.createElement("h1");
+  heading.textContent = "All Tasks";
   const tasks = storeTask.tasks;
   const view = document.querySelector(".view");
   // view.textContent = "";
@@ -14,15 +16,17 @@ export function tasksView() {
     return acc;
   }, {});
 
-  console.log(tasksByDate);
-
+  const taskList = document.createElement("div");
+  taskList.classList.add("task-list");
   for (const date in tasksByDate) {
     const group = document.createElement("div");
     group.textContent = date;
+    group.classList.add("task-group");
     tasksByDate[date].forEach((task) => {
-      const taskItem = document.createElement("div");
-      taskItem.textContent = group.append(taskItem);
+      const taskItem = buildTaskView(task);
+      group.append(taskItem);
     });
-    view.append(group);
+    taskList.append(group);
   }
+  view.append(heading, taskList);
 }
