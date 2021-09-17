@@ -5,7 +5,7 @@ import { format } from "date-fns";
 
 export function todayView() {
   const view = document.querySelector(".view");
-  view.textContent = "";
+  // view.textContent = "";
   const heading = document.createElement("h1");
   heading.textContent = "Today's Tasks";
 
@@ -13,26 +13,60 @@ export function todayView() {
   btn.textContent = "Add New Task";
   btn.classList.add("task-btn");
 
-  const tasksList = document.createElement("section");
-  tasksList.classList.add("task-list");
+  // const tasksList = document.createElement("section");
+  // tasksList.classList.add("task-list");
 
-  const formOverlay = document.querySelector(".form-overlay");
-  const container = document.querySelector(".container");
+  // const formOverlay = document.querySelector(".form-overlay");
+  // const container = document.querySelector(".container");
 
-  const cancel = document.querySelector(".cancel");
-  cancel.addEventListener("click", () => {
-    toggleForm(formOverlay, container);
-    form.reset();
-  });
+  // const cancel = document.querySelector(".cancel");
+  // cancel.addEventListener("click", () => {
+  //   toggleForm(formOverlay, container);
+  //   form.reset();
+  // });
 
-  const form = document.querySelector(".task-form");
-  form.addEventListener("submit", function (e) {
-    e.preventDefault();
-    const task = createTaskFromInput(this);
+  // const form = document.querySelector(".task-form");
+  // form.addEventListener(
+  //   "submit",
+  //   function (e) {
+  //     e.preventDefault();
+  //     const task = createTaskFromInput(this);
+  //     buildTaskView(task);
+  //     toggleForm(formOverlay, container);
+  //     form.reset();
+  //   },
+  //   true
+  // );
+
+  view.append(heading, btn);
+  for (const task of storeTask.tasks) {
     buildTaskView(task);
-    toggleForm(formOverlay, container);
-    form.reset();
-  });
+  }
+  // const addTaskBtns = document.querySelectorAll(".task-btn");
+  // addTaskBtns.forEach((btn) =>
+  //   btn.addEventListener(
+  //     "click",
+  //     () => {
+  //       form.date.value = format(new Date(), "yyyy-MM-dd");
+  //       toggleForm(formOverlay, container);
+  //       document.querySelector(".task-form #name").focus();
+  //     },
+  //     false
+  //   )
+  // );
+
+  // btn.addEventListener("click", () => {
+  //   form.date.value = format(new Date(), "yyyy-MM-dd");
+  //   toggleForm(formOverlay, container);
+  //   document.querySelector(".task-form #name").focus();
+  // });
+  // function toggleForm(content, background) {
+  //   if (!content.classList.contains("active")) {
+  //     background.style.filter = "blur(5px)";
+  //     background.style.boxShadow = "0 0 5px 5px";
+  //   } else background.style.filter = "none";
+  //   content.classList.toggle("active");
+  // }
 
   // function buildTask(task) {
   //   const taskDiv = document.createElement("div");
@@ -85,24 +119,4 @@ export function todayView() {
   //   this.nextElementSibling.classList.toggle("active");
   //   console.log(storeTask.tasks);
   // }
-
-  view.append(heading, btn);
-  for (const task of storeTask.tasks) {
-    buildTaskView(task);
-  }
-  const addTaskBtns = document.querySelectorAll(".task-btn");
-  addTaskBtns.forEach((btn) =>
-    btn.addEventListener("click", () => {
-      form.date.value = format(new Date(), "yyyy-MM-dd");
-      toggleForm(formOverlay, container);
-      document.querySelector(".task-form #name").focus();
-    })
-  );
-  function toggleForm(content, background) {
-    if (!content.classList.contains("active")) {
-      background.style.filter = "blur(5px)";
-      background.style.boxShadow = "0 0 5px 5px";
-    } else background.style.filter = "none";
-    content.classList.toggle("active");
-  }
 }

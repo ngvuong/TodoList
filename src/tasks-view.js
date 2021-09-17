@@ -4,7 +4,7 @@ export function tasksView() {
   const dates = [...new Set(storeTask.tasks.map((task) => task.date))];
   const tasks = storeTask.tasks;
   const view = document.querySelector(".view");
-  view.textContent = "";
+  // view.textContent = "";
 
   const tasksByDate = tasks.reduce((acc, task) => {
     if (acc[task.date]) {

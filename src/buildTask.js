@@ -25,7 +25,6 @@ export function buildTaskView(task) {
   function expandTask() {
     this.classList.toggle("hidden");
     this.nextElementSibling.classList.toggle("active");
-    // console.log(storeTask.tasks);
   }
 }
 
@@ -49,6 +48,5 @@ export function buildExpandedTaskView(task) {
 
   formClone.firstElementChild.remove();
   formClone.lastElementChild.remove();
-  // taskDiv.append(formClone);
   return formClone;
 }
