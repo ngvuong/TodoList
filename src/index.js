@@ -32,6 +32,8 @@ import { createTaskFromInput } from "./task";
     // buildTaskView(task);
     if (currentPage === "Today") {
       todayView();
+    } else if (currentPage === "Tasks") {
+      tasksView();
     }
     toggleForm(formOverlay, container);
     form.reset();

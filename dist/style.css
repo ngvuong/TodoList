@@ -123,7 +123,7 @@ textarea {
   /* justify-content: space-between; */
   border: 1px solid black;
   margin: 0.1rem 0 0.1rem 0;
-  width: 70%;
+  width: 100%;
   color: green;
   background-color: rgba(0, 0, 0, 0.2);
   height: 1.2em;
@@ -174,15 +174,22 @@ textarea {
 }
 
 .task-group {
+  display: flex;
+  flex-direction: column;
+  /* align-items: center; */
   width: 100%;
 }
 
-.taskgroup .task-expanded {
+.task-group div {
+  width: 100%;
+}
+
+.task-expanded {
   position: absolute;
   display: flex;
   flex-direction: column;
   opacity: 0;
-  width: 70%;
+  width: 100%;
   max-height: 0;
   overflow: hidden;
   background-color: yellow;
@@ -194,7 +201,7 @@ textarea {
   flex-direction: column;
   /* align-items: center; */
   opacity: 1;
-  width: 70%;
+  width: 100%;
   max-height: 100%;
 }
 

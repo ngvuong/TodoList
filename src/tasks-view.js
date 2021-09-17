@@ -6,7 +6,7 @@ export function tasksView() {
   heading.textContent = "All Tasks";
   const tasks = storeTask.tasks;
   const view = document.querySelector(".view");
-  // view.textContent = "";
+  view.textContent = "";
 
   const tasksByDate = tasks.reduce((acc, task) => {
     if (acc[task.date]) {
