@@ -173,7 +173,11 @@ textarea {
   width: 100%;
 }
 
-.task-expanded {
+.task-group {
+  width: 100%;
+}
+
+.taskgroup .task-expanded {
   position: absolute;
   display: flex;
   flex-direction: column;
