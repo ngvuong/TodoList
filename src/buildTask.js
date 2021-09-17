@@ -1,14 +1,11 @@
 export function buildTaskView(task) {
-  // const tasksList = document.createElement("section");
-  // tasksList.classList.add("task-list");
-  // const view = document.querySelector(".view");
-
   const taskItem = document.createElement("div");
   const taskShort = document.createElement("div");
   const name = document.createElement("span");
   const notes = document.createElement("span");
   const priority = document.createElement("span");
 
+  taskItem.classList.add("task-item");
   taskShort.classList.add("task-short");
   name.textContent = `${task.name}`;
   if (task.notes.length < 30) {
@@ -22,7 +19,6 @@ export function buildTaskView(task) {
   const taskFull = buildExpandedTask(task);
   taskItem.append(taskShort, taskFull);
   taskShort.addEventListener("click", expandTask);
-  // view.append(tasksList);
 
   function buildExpandedTask(task) {
     const form = document.querySelector(".task-form");

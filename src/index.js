@@ -24,30 +24,26 @@ import { createTaskFromInput } from "./task";
     form.reset();
   });
 
+  let currentPage = "Today";
   const form = document.querySelector(".task-form");
-  form.addEventListener(
-    "submit",
-    function (e) {
-      e.preventDefault();
-      const task = createTaskFromInput(this);
-      buildTaskView(task);
-      toggleForm(formOverlay, container);
-      form.reset();
-    },
-    true
-  );
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    const task = createTaskFromInput(this);
+    // buildTaskView(task);
+    if (currentPage === "Today") {
+      todayView();
+    }
+    toggleForm(formOverlay, container);
+    form.reset();
+  });
 
   const addTaskBtns = document.querySelectorAll(".task-btn");
   addTaskBtns.forEach((btn) =>
-    btn.addEventListener(
-      "click",
-      () => {
-        form.date.value = format(new Date(), "yyyy-MM-dd");
-        toggleForm(formOverlay, container);
-        document.querySelector(".task-form #name").focus();
-      },
-      false
-    )
+    btn.addEventListener("click", () => {
+      form.date.value = format(new Date(), "yyyy-MM-dd");
+      toggleForm(formOverlay, container);
+      document.querySelector(".task-form #name").focus();
+    })
   );
   function toggleForm(content, background) {
     if (!content.classList.contains("active")) {
@@ -68,5 +64,6 @@ import { createTaskFromInput } from "./task";
     } else if (page === "Tasks") {
       tasksView();
     } else projectView();
+    currentPage = page;
   }
 })();

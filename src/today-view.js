@@ -5,7 +5,7 @@ import { format } from "date-fns";
 
 export function todayView() {
   const view = document.querySelector(".view");
-  // view.textContent = "";
+  view.textContent = "";
   const heading = document.createElement("h1");
   heading.textContent = "Today's Tasks";
 
@@ -38,12 +38,12 @@ export function todayView() {
   //   true
   // );
   const today = format(new Date(), "yyyy-MM-dd");
-  view.append(heading, btn);
   for (const task of storeTask.tasks) {
     if (task.date === today) {
       taskList.append(buildTaskView(task));
     }
   }
+  view.append(heading, taskList);
   // const addTaskBtns = document.querySelectorAll(".task-btn");
   // addTaskBtns.forEach((btn) =>
   //   btn.addEventListener(
