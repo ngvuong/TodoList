@@ -16,7 +16,7 @@ import { createTaskFromInput } from "./task";
   todayView();
 
   const formOverlay = document.querySelector(".form-overlay");
-  const container = document.querySelector(".container");
+  const container = document.querySelector(".grid-container");
 
   const cancel = document.querySelector(".cancel");
   cancel.addEventListener("click", () => {

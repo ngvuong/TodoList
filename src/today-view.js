@@ -1,6 +1,6 @@
 import { createTaskFromInput } from "./task";
 import { storeTask } from "./storage";
-import { buildTaskView, buildExpandedTaskView } from "./buildTask";
+import { buildTaskView } from "./buildTask";
 import { format } from "date-fns";
 
 export function todayView() {
@@ -13,8 +13,8 @@ export function todayView() {
   btn.textContent = "Add New Task";
   btn.classList.add("task-btn");
 
-  // const tasksList = document.createElement("section");
-  // tasksList.classList.add("task-list");
+  const taskList = document.createElement("section");
+  taskList.classList.add("task-list");
 
   // const formOverlay = document.querySelector(".form-overlay");
   // const container = document.querySelector(".container");
@@ -37,10 +37,12 @@ export function todayView() {
   //   },
   //   true
   // );
-
+  const today = format(new Date(), "yyyy-MM-dd");
   view.append(heading, btn);
   for (const task of storeTask.tasks) {
-    buildTaskView(task);
+    if (task.date === today) {
+      taskList.append(buildTaskView(task));
+    }
   }
   // const addTaskBtns = document.querySelectorAll(".task-btn");
   // addTaskBtns.forEach((btn) =>
