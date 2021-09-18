@@ -6,6 +6,7 @@ import { storeTask } from "./storage";
 import { format } from "date-fns";
 import { buildTaskView, buildExpandedTaskView } from "./buildTask";
 import { createTaskFromInput } from "./task";
+import { pubsub } from "./pubsub";
 
 (function View() {
   const view = document.querySelector(".view");
@@ -30,11 +31,12 @@ import { createTaskFromInput } from "./task";
     e.preventDefault();
     const task = createTaskFromInput(this);
     // buildTaskView(task);
-    if (currentPage === "Today") {
-      todayView();
-    } else if (currentPage === "Tasks") {
-      tasksView();
-    }
+    pubsub.publish("taskAdded", task);
+    // if (currentPage === "Today") {
+    //   todayView();
+    // } else if (currentPage === "Tasks") {
+    //   tasksView();
+    // }
     toggleForm(formOverlay, container);
     form.reset();
   });

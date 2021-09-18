@@ -2,6 +2,7 @@ import { createTaskFromInput } from "./task";
 import { storeTask } from "./storage";
 import { buildTaskView } from "./buildTask";
 import { format } from "date-fns";
+import { pubsub } from "./pubsub";
 
 export function todayView() {
   const view = document.querySelector(".view");
@@ -15,6 +16,19 @@ export function todayView() {
 
   const taskList = document.createElement("section");
   taskList.classList.add("task-list");
+
+  const today = format(new Date(), "yyyy-MM-dd");
+  for (const task of storeTask.tasks) {
+    if (task.date === today) {
+      taskList.append(buildTaskView(task));
+    }
+  }
+  view.append(heading, taskList);
+
+  pubsub.subscribe("taskAdded", renderTask);
+  function renderTask(task) {
+    taskList.append(buildTaskView(task));
+  }
 
   // const formOverlay = document.querySelector(".form-overlay");
   // const container = document.querySelector(".container");
@@ -37,13 +51,7 @@ export function todayView() {
   //   },
   //   true
   // );
-  const today = format(new Date(), "yyyy-MM-dd");
-  for (const task of storeTask.tasks) {
-    if (task.date === today) {
-      taskList.append(buildTaskView(task));
-    }
-  }
-  view.append(heading, taskList);
+
   // const addTaskBtns = document.querySelectorAll(".task-btn");
   // addTaskBtns.forEach((btn) =>
   //   btn.addEventListener(
