@@ -1,10 +1,11 @@
 import { storeTask } from "./storage";
 import { buildTaskView } from "./buildTask";
+import { pubsub } from "./pubsub";
 
 export function tasksView() {
   const heading = document.createElement("h1");
   heading.textContent = "All Tasks";
-  const tasks = storeTask.tasks;
+  const tasks = storeTask.tasks.sort();
   const view = document.querySelector(".view");
   view.textContent = "";
 
@@ -29,4 +30,7 @@ export function tasksView() {
     taskList.append(group);
   }
   view.append(heading, taskList);
+
+  pubsub.subscribe("taskAdded", renderTask);
+  function renderTask(task) {}
 }

@@ -19,15 +19,15 @@ export function todayView() {
 
   const today = format(new Date(), "yyyy-MM-dd");
   for (const task of storeTask.tasks) {
-    if (task.date === today) {
-      taskList.append(buildTaskView(task));
-    }
+    renderTask(task);
   }
   view.append(heading, taskList);
 
   pubsub.subscribe("taskAdded", renderTask);
   function renderTask(task) {
-    taskList.append(buildTaskView(task));
+    if (task.date === today) {
+      taskList.append(buildTaskView(task));
+    }
   }
 
   // const formOverlay = document.querySelector(".form-overlay");
