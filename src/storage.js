@@ -9,8 +9,8 @@ export const storeTask = (() => {
 export const storeProject = (() => {
   const projects = [];
 
-  const store = (project) => {
-    projects.push(project);
+  const store = (...project) => {
+    projects.push(...project.toLowerCase());
   };
 
   return { projects, store };

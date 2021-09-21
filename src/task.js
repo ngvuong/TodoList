@@ -1,4 +1,4 @@
-import { storeTask } from "./storage";
+import { storeProject, storeTask } from "./storage";
 import { tasksView } from "./tasks-view";
 
 export function Task(name, notes, date, priority, project = "No Project") {
@@ -20,12 +20,6 @@ export function createTaskFromInput(form) {
   const project = formFields.project.value || "No Project";
   const task = Task(name, notes, date, priority, project);
   storeTask.store(task);
-  // tasksView();
+  storeProject.store(task.project);
   return task;
-}
-
-export function taskList() {
-  const tasks = [];
-  const addTask = (task) => tasks.push(task);
-  return { tasks, addTask };
 }

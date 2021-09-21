@@ -4,6 +4,8 @@ export function buildTaskView(task) {
   const name = document.createElement("span");
   const notes = document.createElement("span");
   const priority = document.createElement("span");
+  const checkbox = document.createElement("input");
+  checkbox.type = "checkbox";
 
   taskItem.classList.add("task-item");
   taskShort.classList.add("task-short");
@@ -14,9 +16,10 @@ export function buildTaskView(task) {
     notes.textContent = `${task.notes.slice(0, 28)}...`;
   }
   priority.textContent = `${task.priority}`;
-  taskShort.append(name, notes, priority);
+  taskShort.append(checkbox, name, notes, priority);
+
   if (task.priority === "!!!") {
-    taskShort.style.borderColor = "red";
+    priority.style.color = "red";
   } else if (task.priority === "!!") {
     taskShort.style.borderColor = "blue";
   } else taskShort.style.borderColor = "green";
@@ -36,7 +39,6 @@ export function buildTaskView(task) {
     const date = formClone.date;
     const priority = formClone.priority;
     const project = formClone.project;
-    console.dir(notes);
     name.value = task.name;
     notes.value = task.notes;
     date.value = task.date;
