@@ -10,7 +10,12 @@ export const storeProject = (() => {
   const projects = [];
 
   const store = (...project) => {
-    projects.push(...project.toLowerCase());
+    [...project].forEach((project) => {
+      if (!projects.includes(project)) {
+        projects.push(project.toLowerCase());
+      }
+    });
+    // projects.push(...project.toLowerCase());
   };
 
   return { projects, store };

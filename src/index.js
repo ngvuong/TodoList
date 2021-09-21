@@ -11,8 +11,8 @@ import { pubsub } from "./pubsub";
 (function View() {
   const view = document.querySelector(".view");
   const task1 = Task("task1", "test", "2021-09-16", "!!!", "project1");
-  const task2 = Task("task2", "test", "2021-09-15", "!!!", "project2");
-  const task3 = Task("task2", "test", "2021-09-20", "!!!", "project1");
+  const task2 = Task("task2", "test", "2021-09-15", "!!!", "Project2");
+  const task3 = Task("task2", "test", "2021-09-20", "!!!", "project2");
   storeTask.store(task1, task2, task3);
   storeProject.store(task1.project, task2.project, task3.project);
 
@@ -64,7 +64,7 @@ import { pubsub } from "./pubsub";
 
   function renderView() {
     const page = this.textContent;
-    view.textContent = "";
+    // view.textContent = "";
     if (page === "Today") {
       todayView();
     } else if (page === "Tasks") {
