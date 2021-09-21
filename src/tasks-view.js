@@ -5,10 +5,12 @@ import { pubsub } from "./pubsub";
 export function tasksView() {
   const heading = document.createElement("h1");
   heading.textContent = "All Tasks";
-  const tasks = storeTask.tasks.sort();
+  const tasks = [...storeTask.tasks];
+  tasks.sort((a, b) => (a.date > b.date ? 1 : b.date > a.date ? -1 : 0));
+  console.log(tasks);
+
   const view = document.querySelector(".view");
   view.textContent = "";
-
   const tasksByDate = tasks.reduce((acc, task) => {
     if (acc[task.date]) {
       acc[task.date].push(task);
@@ -32,5 +34,7 @@ export function tasksView() {
   view.append(heading, taskList);
 
   pubsub.subscribe("taskAdded", renderTask);
-  function renderTask(task) {}
+  function renderTask(task) {
+    // group = document.createElement("div");
+  }
 }
