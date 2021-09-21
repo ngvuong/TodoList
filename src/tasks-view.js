@@ -36,5 +36,14 @@ export function tasksView() {
   pubsub.subscribe("taskAdded", renderTask);
   function renderTask(task) {
     // group = document.createElement("div");
+    // if (tasksByDate[task.date]) {
+    //   tasksByDate[task.date].push(task);
+    // } else {
+    //   tasksByDate[task.date] = [task];
+    // }
+    const currentHeading = document.querySelector(".view h1");
+    if (currentHeading.textContent === "All Tasks") {
+      tasksView();
+    }
   }
 }
