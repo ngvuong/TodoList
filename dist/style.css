@@ -37,7 +37,7 @@ body {
 .view-nav {
   width: 70%;
   background-color: red;
-  height: 90vh;
+  min-height: 90vh;
   grid-area: nav;
 }
 
@@ -185,7 +185,7 @@ textarea {
 }
 
 .task-expanded {
-  position: absolute;
+  /* position: fixed; */
   display: flex;
   flex-direction: column;
   opacity: 0;
@@ -193,12 +193,12 @@ textarea {
   max-height: 0;
   overflow: hidden;
   background-color: yellow;
-  transition: max-height 0.3s linear;
+  transition: all 0.3s cubic-bezier(0.5, 0, 0.5, 1);
 }
 .task-expanded.active {
-  position: static;
-  /* display: flex; */
-  flex-direction: column;
+  /* position: static; */
+  /* display: flex;
+  flex-direction: column; */
   /* align-items: center; */
   opacity: 1;
   width: 100%;
@@ -223,7 +223,7 @@ textarea {
   align-self: center;
 }
 
-.task-expanded.active input {
+.task-expanded * {
   background-color: yellow;
   border: none;
 }

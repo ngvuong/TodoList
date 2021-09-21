@@ -45,7 +45,13 @@ export function buildTaskView(task) {
 
   function expandTask() {
     this.classList.toggle("hidden");
-    this.nextElementSibling.classList.toggle("active");
+    const expanded = this.nextElementSibling;
+    expanded.classList.toggle("active");
+    if (expanded.style.maxHeight) {
+      expanded.style.maxHeight = null;
+    } else {
+      expanded.style.maxHeight = expanded.scrollHeight + "px";
+    }
   }
 
   return taskItem;
