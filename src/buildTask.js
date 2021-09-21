@@ -15,6 +15,11 @@ export function buildTaskView(task) {
   }
   priority.textContent = `${task.priority}`;
   taskShort.append(name, notes, priority);
+  if (task.priority === "!!!") {
+    taskShort.style.borderColor = "red";
+  } else if (task.priority === "!!") {
+    taskShort.style.borderColor = "blue";
+  } else taskShort.style.borderColor = "green";
 
   const taskFull = buildExpandedTask(task);
   taskItem.append(taskShort, taskFull);
@@ -31,7 +36,7 @@ export function buildTaskView(task) {
     const date = formClone.date;
     const priority = formClone.priority;
     const project = formClone.project;
-
+    console.dir(notes);
     name.value = task.name;
     notes.value = task.notes;
     date.value = task.date;
@@ -50,7 +55,7 @@ export function buildTaskView(task) {
     if (expanded.style.maxHeight) {
       expanded.style.maxHeight = null;
     } else {
-      expanded.style.maxHeight = expanded.scrollHeight + "px";
+      expanded.style.maxHeight = `${expanded.scrollHeight}px`;
     }
   }
 

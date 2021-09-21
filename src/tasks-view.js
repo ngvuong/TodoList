@@ -7,10 +7,10 @@ export function tasksView() {
   heading.textContent = "All Tasks";
   const tasks = [...storeTask.tasks];
   tasks.sort((a, b) => (a.date > b.date ? 1 : b.date > a.date ? -1 : 0));
-  console.log(tasks);
 
   const view = document.querySelector(".view");
   view.textContent = "";
+
   const tasksByDate = tasks.reduce((acc, task) => {
     if (acc[task.date]) {
       acc[task.date].push(task);
@@ -33,7 +33,12 @@ export function tasksView() {
   }
   view.append(heading, taskList);
 
-  pubsub.subscribe("taskAdded", renderTask);
+  pubsub.subscribe("taskAdded", () => {
+    const currentPage = document.querySelector(".view h1");
+    if (currentPage.textContent === "All Tasks") {
+      tasksView();
+    }
+  });
   function renderTask(task) {
     // group = document.createElement("div");
     // if (tasksByDate[task.date]) {
@@ -41,9 +46,5 @@ export function tasksView() {
     // } else {
     //   tasksByDate[task.date] = [task];
     // }
-    const currentHeading = document.querySelector(".view h1");
-    if (currentHeading.textContent === "All Tasks") {
-      tasksView();
-    }
   }
 }
