@@ -33,18 +33,11 @@ export function tasksView() {
   }
   view.append(heading, taskList);
 
-  pubsub.subscribe("taskAdded", () => {
+  pubsub.subscribe("taskAdded", renderTasksView);
+  function renderTasksView(task) {
     const currentPage = document.querySelector(".view h1");
     if (currentPage.textContent === "All Tasks") {
       tasksView();
     }
-  });
-  function renderTask(task) {
-    // group = document.createElement("div");
-    // if (tasksByDate[task.date]) {
-    //   tasksByDate[task.date].push(task);
-    // } else {
-    //   tasksByDate[task.date] = [task];
-    // }
   }
 }

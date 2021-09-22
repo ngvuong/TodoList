@@ -25,19 +25,17 @@ export function todayView() {
   }
   view.append(heading, taskList);
   // pubsub.unsubscribe("taskAdded", renderTask);
-
-  pubsub.subscribe("taskAdded", renderTask, updateStats);
+  pubsub.subscribe("taskAdded", renderTask);
   function renderTask(task) {
     if (task.date === today) {
       taskList.append(buildTaskView(task));
     }
   }
-
+  pubsub.subscribe("taskAdded", updateStats);
   const todayStats = document.querySelector(".today-stats");
   todayStats.textContent = tasks.filter((task) => task.date === today).length;
   function updateStats(task) {
     if (task.date === today) {
-      console.log(todayStats.textContent);
       todayStats.textContent++;
     }
   }

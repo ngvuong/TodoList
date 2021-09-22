@@ -34,10 +34,12 @@ export function projectView() {
   }
   view.append(heading, projectList);
 
-  pubsub.subscribe("taskAdded", () => {
+  pubsub.subscribe("taskAdded", renderProjectView);
+
+  function renderProjectView(task) {
     const currentPage = document.querySelector(".view h1");
     if (currentPage.textContent === "Projects") {
       projectView();
     }
-  });
+  }
 }

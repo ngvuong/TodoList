@@ -1,19 +1,17 @@
 export const pubsub = (function () {
   const events = {};
-  function subscribe(event, ...callback) {
+  function subscribe(event, callback) {
     events[event] = events[event] || [];
-
-    events[event].push(...callback);
-    console.log(events[event]);
-    events[event] = events[event].filter(
-      (cb, index) => events[event].indexOf(cb) === index
-    );
-    console.log(events);
+    const fnName = callback.name;
+    const cbNames = events[event].map((cb) => cb.name);
+    if (!cbNames.includes(fnName)) {
+      events[event].push(callback);
+    }
   }
 
   function unsubscribe(event, callback) {
     if (events[event]) {
-      events[event].splice(events[event].indexOf(callback), 1);
+      events[event] = events[event].filter((cb) => cb !== callback);
     }
   }
 
