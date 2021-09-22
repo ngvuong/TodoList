@@ -31,7 +31,6 @@ export function buildTaskView(task) {
   function buildExpandedTask(task) {
     const form = document.querySelector(".task-form");
     const formClone = form.cloneNode(true);
-    console.log(formClone.priority);
     formClone.classList.add("task-expanded");
     formClone.classList.remove("task-form");
     const name = formClone.name;

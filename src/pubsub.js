@@ -1,8 +1,8 @@
 export const pubsub = (function () {
   const events = {};
-  function subscribe(event, callback) {
+  function subscribe(event, ...callback) {
     events[event] = events[event] || [];
-    events[event].push(callback);
+    events[event].push(...callback);
   }
 
   function publish(event, data) {
