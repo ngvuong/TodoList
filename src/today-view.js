@@ -4,7 +4,7 @@ import { buildTaskView } from "./buildTask";
 import { format } from "date-fns";
 import { pubsub } from "./pubsub";
 
-export function todayView() {
+export const todayView = (function () {
   const view = document.querySelector(".view");
   view.textContent = "";
   const heading = document.createElement("h1");
@@ -19,12 +19,20 @@ export function todayView() {
 
   const today = format(new Date(), "yyyy-MM-dd");
   const tasks = storeTask.tasks;
+  const todayStats = document.querySelector(".today-stats");
 
-  for (const task of tasks) {
-    renderTask(task);
-  }
-  view.append(heading, taskList);
-  // pubsub.unsubscribe("taskAdded", renderTask);
+  const render = () => {
+    // const view = document.querySelector(".view");
+
+    todayStats.textContent = tasks.filter((task) => task.date === today).length;
+    view.textContent = "";
+    taskList.textContent = "";
+
+    for (const task of tasks) {
+      renderTask(task);
+    }
+    view.append(heading, taskList);
+  };
   pubsub.subscribe("taskAdded", renderTask);
   function renderTask(task) {
     if (task.date === today) {
@@ -32,11 +40,12 @@ export function todayView() {
     }
   }
   pubsub.subscribe("taskAdded", updateStats);
-  const todayStats = document.querySelector(".today-stats");
-  todayStats.textContent = tasks.filter((task) => task.date === today).length;
+
   function updateStats(task) {
     if (task.date === today) {
       todayStats.textContent++;
     }
   }
-}
+
+  return { render };
+})();

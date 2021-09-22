@@ -2,7 +2,7 @@ import { buildTaskView } from "./buildTask";
 import { pubsub } from "./pubsub";
 import { storeTask, storeProject } from "./storage";
 
-export function projectView() {
+export const projectView = (function () {
   const view = document.querySelector(".view");
   view.textContent = "";
 
@@ -14,32 +14,41 @@ export function projectView() {
   const projectList = document.createElement("section");
   projectList.classList.add("project-list");
 
-  const tasksByProject = tasks.reduce((acc, task) => {
-    const project = task.project.toLowerCase();
-    if (acc[project]) {
-      acc[project].push(task);
-    } else acc[project] = [task];
+  const render = () => {
+    view.textContent = "";
+    projectList.textContent = "";
 
-    return acc;
-  }, {});
+    const tasksByProject = tasks.reduce((acc, task) => {
+      console.log("tbp");
+      const project = task.project.toLowerCase();
+      if (acc[project]) {
+        acc[project].push(task);
+      } else acc[project] = [task];
 
-  for (const key in tasksByProject) {
-    const project = document.createElement("div");
-    project.textContent = key;
-    tasksByProject[key].forEach((task) => {
-      const taskItem = buildTaskView(task);
-      project.appendChild(taskItem);
-    });
-    projectList.appendChild(project);
-  }
-  view.append(heading, projectList);
+      return acc;
+    }, {});
+
+    console.log(tasksByProject);
+    for (const key in tasksByProject) {
+      const project = document.createElement("div");
+      project.textContent = key;
+      tasksByProject[key].forEach((task) => {
+        const taskItem = buildTaskView(task);
+        project.appendChild(taskItem);
+      });
+      projectList.appendChild(project);
+    }
+    view.append(heading, projectList);
+  };
 
   pubsub.subscribe("taskAdded", renderProjectView);
 
   function renderProjectView(task) {
     const currentPage = document.querySelector(".view h1");
     if (currentPage.textContent === "Projects") {
-      projectView();
+      projectView.render();
     }
   }
-}
+
+  return { render };
+})();

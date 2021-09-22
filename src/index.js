@@ -16,7 +16,7 @@ import { pubsub } from "./pubsub";
   storeTask.store(task1, task2, task3);
   storeProject.store(task1.project, task2.project, task3.project);
 
-  todayView();
+  todayView.render();
 
   const navBtns = document.querySelectorAll(".nav-btn");
   navBtns.forEach((btn) => btn.addEventListener("click", renderView));
@@ -27,10 +27,10 @@ import { pubsub } from "./pubsub";
     if (page !== currentPage) {
       currentPage = page;
       if (page === "Today") {
-        todayView();
+        todayView.render();
       } else if (page === "Tasks") {
-        tasksView();
-      } else projectView();
+        tasksView.render();
+      } else projectView.render();
     }
   }
 })();
