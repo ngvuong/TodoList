@@ -8,7 +8,7 @@ import { buildTaskView, buildExpandedTaskView } from "./buildTask";
 import { createTaskFromInput } from "./task";
 import { pubsub } from "./pubsub";
 
-(function View() {
+(function ViewController() {
   const view = document.querySelector(".view");
   const task1 = Task("task1", "test", "2021-09-16", "!!!", "project1");
   const task2 = Task("task2", "test", "2021-09-15", "!!!", "Project2");
@@ -18,6 +18,20 @@ import { pubsub } from "./pubsub";
 
   todayView();
 
+  const navBtns = document.querySelectorAll(".nav-btn");
+  navBtns.forEach((btn) => btn.addEventListener("click", renderView));
+
+  function renderView() {
+    const page = this.textContent;
+    if (page === "Today") {
+      todayView();
+    } else if (page === "Tasks") {
+      tasksView();
+    } else projectView();
+  }
+})();
+
+(function formController() {
   const formOverlay = document.querySelector(".form-overlay");
   const container = document.querySelector(".grid-container");
 
@@ -27,18 +41,13 @@ import { pubsub } from "./pubsub";
     form.reset();
   });
 
-  let currentPage = "Today";
   const form = document.querySelector(".task-form");
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     const task = createTaskFromInput(this);
-    // buildTaskView(task);
+
     pubsub.publish("taskAdded", task);
-    // if (currentPage === "Today") {
-    //   todayView();
-    // } else if (currentPage === "Tasks") {
-    //   tasksView();
-    // }
+
     toggleForm(formOverlay, container);
     form.reset();
   });
@@ -57,19 +66,5 @@ import { pubsub } from "./pubsub";
       background.style.boxShadow = "0 0 5px 5px";
     } else background.style.filter = "none";
     content.classList.toggle("active");
-  }
-
-  const navBtns = document.querySelectorAll(".nav-btn");
-  navBtns.forEach((btn) => btn.addEventListener("click", renderView));
-
-  function renderView() {
-    const page = this.textContent;
-    // view.textContent = "";
-    if (page === "Today") {
-      todayView();
-    } else if (page === "Tasks") {
-      tasksView();
-    } else projectView();
-    currentPage = page;
   }
 })();

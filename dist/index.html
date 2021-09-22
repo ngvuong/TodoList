@@ -27,22 +27,23 @@
         <div class="form-info">
           <div class="info-group">
             <label for="name"
-              >Name: <input id="name" type="text" name="name"
+              ><input id="name" type="text" name="name" placeholder="Task Name"
             /></label>
-            <label for="notes"
-              >Description: <br /><textarea
+            <label for="notes"></label>
+              <textarea
                 name="notes"
                 id="notes"
                 cols="21"
                 rows="5"
+                placeholder="Description"
               ></textarea>
             </label>
             <label for="project"
-              >Project: <br /><input
+              ><input
                 id="project"
                 type="text"
                 name="project"
-                placeholder="No Project"
+                placeholder="Project"
             /></label>
           </div>
           <div class="info-group">
@@ -56,6 +57,9 @@
                 <option value="!!!">!!!</option>
               </select></label
             >
+            <label for="">!<input type="radio" name='priority' value='!'></label>
+            <label for="">!!<input type="radio" name='priority' value='!!'></label>
+            <label for="">!!!<input type="radio" name='priority' value='!!!'></label>
           </div>
         </div>
         <button name="save">Submit</button>
