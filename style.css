@@ -12,6 +12,7 @@ body {
   /* width: 100vw; */
   padding: 0;
   border: 0;
+  background-color: rgba(68, 80, 92, 1);
 }
 
 .grid-container {
@@ -32,14 +33,14 @@ body {
   grid-area: header;
   height: 10vh;
   font-size: 3rem;
-  background-color: rgb(68, 80, 92);
+  background-color: rgb(180, 4, 105);
 }
 
 .view-nav {
   width: 70%;
-  background-color: red;
   min-height: 90vh;
   grid-area: nav;
+  background-color: rgb(89, 253, 253);
 }
 
 .nav-btn {
@@ -132,10 +133,11 @@ textarea {
   grid-template-columns: 1em 1.5fr 2fr 0.5fr 1em;
   /* justify-content: space-between; */
   border: 1px solid black;
+  border-bottom-width: 5px;
   margin: 0.1rem 0 0.1rem 0;
   width: 100%;
   color: green;
-  background-color: rgba(0, 0, 0, 0.2);
+  background-color: #e1c340;
   height: 1.2em;
 }
 
@@ -181,6 +183,7 @@ textarea {
   flex-direction: column;
   align-items: center;
   width: 100%;
+  text-transform: capitalize;
 }
 
 .task-group {
