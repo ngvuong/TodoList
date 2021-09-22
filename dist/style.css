@@ -139,14 +139,14 @@ textarea {
 .task-short {
   display: grid;
   grid-template-columns: 1em 1.5fr 2fr 0.5fr 1em;
-  /* justify-content: space-between; */
+  align-content: center;
   border: 1px solid black;
   border-bottom-width: 5px;
   margin: 0.1rem 0 0.1rem 0;
   width: 100%;
   color: green;
   background-color: #e1c340;
-  height: 1.2em;
+  height: 2em;
 }
 
 .task-short:hover {

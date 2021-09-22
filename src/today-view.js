@@ -18,24 +18,26 @@ export function todayView() {
   taskList.classList.add("task-list");
 
   const today = format(new Date(), "yyyy-MM-dd");
-  const todayStats = document.querySelector(".today-stats");
   const tasks = storeTask.tasks;
 
   for (const task of tasks) {
-    update(task);
+    renderTask(task);
   }
   view.append(heading, taskList);
+  // pubsub.unsubscribe("taskAdded", renderTask);
 
-  pubsub.subscribe("taskAdded", update);
-  function update(task) {
+  pubsub.subscribe("taskAdded", renderTask, updateStats);
+  function renderTask(task) {
     if (task.date === today) {
       taskList.append(buildTaskView(task));
-      todayStats.textContent++;
     }
   }
-  // todayStats.textContent = tasks.filter((task) => task.date === today).length;
+
+  const todayStats = document.querySelector(".today-stats");
+  todayStats.textContent = tasks.filter((task) => task.date === today).length;
   function updateStats(task) {
     if (task.date === today) {
+      console.log(todayStats.textContent);
       todayStats.textContent++;
     }
   }

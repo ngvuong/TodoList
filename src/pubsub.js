@@ -2,7 +2,19 @@ export const pubsub = (function () {
   const events = {};
   function subscribe(event, ...callback) {
     events[event] = events[event] || [];
+
     events[event].push(...callback);
+    console.log(events[event]);
+    events[event] = events[event].filter(
+      (cb, index) => events[event].indexOf(cb) === index
+    );
+    console.log(events);
+  }
+
+  function unsubscribe(event, callback) {
+    if (events[event]) {
+      events[event].splice(events[event].indexOf(callback), 1);
+    }
   }
 
   function publish(event, data) {
@@ -11,5 +23,5 @@ export const pubsub = (function () {
     }
   }
 
-  return { subscribe, publish };
+  return { subscribe, unsubscribe, publish };
 })();
