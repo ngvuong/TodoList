@@ -21,13 +21,17 @@ import { pubsub } from "./pubsub";
   const navBtns = document.querySelectorAll(".nav-btn");
   navBtns.forEach((btn) => btn.addEventListener("click", renderView));
 
+  let currentPage = "Today";
   function renderView() {
     const page = this.textContent;
-    if (page === "Today") {
-      todayView();
-    } else if (page === "Tasks") {
-      tasksView();
-    } else projectView();
+    if (page !== currentPage) {
+      currentPage = page;
+      if (page === "Today") {
+        todayView();
+      } else if (page === "Tasks") {
+        tasksView();
+      } else projectView();
+    }
   }
 })();
 

@@ -19,7 +19,6 @@ export function buildTaskView(task) {
   taskShort.append(checkbox, name, notes, priority);
 
   if (task.priority === "!!!") {
-    priority.style.color = "red";
     taskShort.style.borderBottomColor = "red";
   } else if (task.priority === "!!") {
     taskShort.style.borderBottomColor = "blue";
@@ -31,8 +30,8 @@ export function buildTaskView(task) {
 
   function buildExpandedTask(task) {
     const form = document.querySelector(".task-form");
-
     const formClone = form.cloneNode(true);
+    console.log(formClone.priority);
     formClone.classList.add("task-expanded");
     formClone.classList.remove("task-form");
     const name = formClone.name;
