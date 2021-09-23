@@ -13,9 +13,9 @@
       <nav class="view-nav">
         <span class="nav-icon"></span>
         <button class="task-btn create-btn">New Task</button>
-        <button class="nav-btn today-view">Today</button> <span class="nav-stats today-stats"></span>
-        <button class="nav-btn all-tasks-view">Tasks</button><span class="nav-stats task-stats"></span>
-        <button class="nav-btn project-view">Projects</button><span class="nav-stats project-stats"></span>
+        <div class="today"><button class="nav-btn today-view">Today</button><span class="nav-stats today-stats"></span></div>
+        <div class="tasks"><button class="nav-btn all-tasks-view">Tasks</button><span class="nav-stats task-stats"></span></div>
+        <div class="projects"><button class="nav-btn project-view">Projects</button><span class="nav-stats project-stats"></span></div>
         <button class="project-btn create-btn">New Project</button>
       </nav>
       <main class="view"></main>
@@ -32,7 +32,7 @@
               <textarea
                 name="notes"
                 id="notes"
-                cols="21"
+                cols="20"
                 rows="5"
                 placeholder="Description"
               ></textarea>
