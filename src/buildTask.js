@@ -1,3 +1,5 @@
+import { pubsub } from "./pubsub";
+
 export function buildTaskView(task) {
   const taskItem = document.createElement("div");
   const taskShort = document.createElement("div");
@@ -6,7 +8,14 @@ export function buildTaskView(task) {
   const priority = document.createElement("span");
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
-
+  checkbox.classList.add("check-task");
+  checkbox.addEventListener("click", (e) => {
+    e.stopPropagation();
+    taskShort.classList.toggle("completed");
+    if (checkbox.checked) {
+      pubsub.publish("taskChecked", task);
+    } else pubsub.publish("taskUnchecked", task);
+  });
   taskItem.classList.add("task-item");
   taskShort.classList.add("task-short");
   name.textContent = `${task.name}`;

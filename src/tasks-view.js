@@ -51,11 +51,15 @@ export const tasksView = (function () {
     taskStats.textContent = tasks.length;
   }
 
-  function updateStats() {
+  function addTask() {
     taskStats.textContent++;
   }
+  function completeTask() {
+    taskStats.textContent--;
+  }
 
-  pubsub.subscribe("taskAdded", updateView, updateStats);
-
+  pubsub.subscribe("taskAdded", updateView, addTask);
+  pubsub.subscribe("taskChecked", completeTask);
+  pubsub.subscribe("taskUnchecked", addTask);
   return { renderView, renderStats };
 })();

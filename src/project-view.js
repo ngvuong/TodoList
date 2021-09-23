@@ -11,12 +11,12 @@ export const projectView = (function () {
 
   const projects = storeProject.projects;
   const tasks = storeTask.tasks;
-  const projectList = document.createElement("section");
-  projectList.classList.add("project-list");
+  const taskList = document.createElement("section");
+  taskList.classList.add("task-list");
 
   const renderView = () => {
     view.textContent = "";
-    projectList.textContent = "";
+    taskList.textContent = "";
 
     const tasksByProject = tasks.reduce((acc, task) => {
       const project = task.project.toLowerCase();
@@ -29,15 +29,15 @@ export const projectView = (function () {
 
     for (const key in tasksByProject) {
       const project = document.createElement("div");
+      project.classList.add("task-group");
       project.textContent = key;
-
       tasksByProject[key].forEach((task) => {
         const taskItem = buildTaskView(task);
         project.appendChild(taskItem);
       });
-      projectList.appendChild(project);
+      taskList.appendChild(project);
     }
-    view.append(heading, projectList);
+    view.append(heading, taskList);
   };
 
   function updateView(task) {
