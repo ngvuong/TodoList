@@ -5,18 +5,21 @@ import { pubsub } from "./pubsub";
 export const tasksView = (function () {
   const heading = document.createElement("h1");
   heading.textContent = "All Tasks";
-  const tasks = [...storeTask.tasks];
-  tasks.sort((a, b) => (a.date > b.date ? 1 : b.date > a.date ? -1 : 0));
-
   const view = document.querySelector(".view");
   view.textContent = "";
 
   const taskList = document.createElement("div");
   taskList.classList.add("task-list");
 
+  const tasks = storeTask.tasks;
+
   const render = () => {
+    const tasks = [...storeTask.tasks];
+    tasks.sort((a, b) => (a.date > b.date ? 1 : b.date > a.date ? -1 : 0));
+
     view.textContent = "";
     taskList.textContent = "";
+
     const tasksByDate = tasks.reduce((acc, task) => {
       if (acc[task.date]) {
         acc[task.date].push(task);
@@ -24,7 +27,6 @@ export const tasksView = (function () {
 
       return acc;
     }, {});
-
     for (const date in tasksByDate) {
       const group = document.createElement("div");
       group.textContent = date;
@@ -38,13 +40,18 @@ export const tasksView = (function () {
     view.append(heading, taskList);
   };
 
-  pubsub.subscribe("taskAdded", renderTasksView);
-  function renderTasksView(task) {
+  function renderTasksView() {
     const currentPage = document.querySelector(".view h1");
     if (currentPage.textContent === "All Tasks") {
       tasksView.render();
     }
   }
+  const taskStats = document.querySelector(".task-stats");
+  taskStats.textContent = tasks.length;
+  console.log(tasks, tasks.length);
+  function updateStats() {}
+
+  pubsub.subscribe("taskAdded", renderTasksView, updateStats);
 
   return { render };
 })();

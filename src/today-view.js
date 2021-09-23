@@ -20,11 +20,12 @@ export const todayView = (function () {
   const today = format(new Date(), "yyyy-MM-dd");
   const tasks = storeTask.tasks;
   const todayStats = document.querySelector(".today-stats");
+  todayStats.textContent = tasks.filter((task) => task.date === today).length;
+  console.log(tasks, tasks.length);
 
   const render = () => {
+    console.log(tasks, tasks.length);
     // const view = document.querySelector(".view");
-
-    todayStats.textContent = tasks.filter((task) => task.date === today).length;
     view.textContent = "";
     taskList.textContent = "";
 
@@ -33,13 +34,14 @@ export const todayView = (function () {
     }
     view.append(heading, taskList);
   };
-  pubsub.subscribe("taskAdded", renderTask);
+  pubsub.subscribe("taskAdded", renderTask, updateStats);
   function renderTask(task) {
     if (task.date === today) {
       taskList.append(buildTaskView(task));
     }
   }
-  pubsub.subscribe("taskAdded", updateStats);
+
+  render();
 
   function updateStats(task) {
     if (task.date === today) {

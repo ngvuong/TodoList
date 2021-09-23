@@ -19,7 +19,6 @@ export const projectView = (function () {
     projectList.textContent = "";
 
     const tasksByProject = tasks.reduce((acc, task) => {
-      console.log("tbp");
       const project = task.project.toLowerCase();
       if (acc[project]) {
         acc[project].push(task);
@@ -28,7 +27,6 @@ export const projectView = (function () {
       return acc;
     }, {});
 
-    console.log(tasksByProject);
     for (const key in tasksByProject) {
       const project = document.createElement("div");
       project.textContent = key;
