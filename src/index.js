@@ -15,8 +15,10 @@ import { pubsub } from "./pubsub";
   const task3 = Task("task2", "test", "2021-09-22", "!!!", "project2");
   storeTask.store(task1, task2, task3);
   storeProject.store(task1.project, task2.project, task3.project);
-  console.log("from index");
-  todayView.render();
+  todayView.renderView();
+  todayView.renderStats();
+  tasksView.renderStats();
+  projectView.renderStats();
 
   const navBtns = document.querySelectorAll(".nav-btn");
   navBtns.forEach((btn) => btn.addEventListener("click", renderView));
@@ -27,10 +29,10 @@ import { pubsub } from "./pubsub";
     if (page !== currentPage) {
       currentPage = page;
       if (page === "Today") {
-        todayView.render();
+        todayView.renderView();
       } else if (page === "Tasks") {
-        tasksView.render();
-      } else projectView.render();
+        tasksView.renderView();
+      } else projectView.renderView();
     }
   }
 })();

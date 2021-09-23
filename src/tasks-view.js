@@ -6,14 +6,12 @@ export const tasksView = (function () {
   const heading = document.createElement("h1");
   heading.textContent = "All Tasks";
   const view = document.querySelector(".view");
-  view.textContent = "";
+  // view.textContent = "";
 
   const taskList = document.createElement("div");
   taskList.classList.add("task-list");
 
-  const tasks = storeTask.tasks;
-
-  const render = () => {
+  const renderView = () => {
     const tasks = [...storeTask.tasks];
     tasks.sort((a, b) => (a.date > b.date ? 1 : b.date > a.date ? -1 : 0));
 
@@ -40,18 +38,24 @@ export const tasksView = (function () {
     view.append(heading, taskList);
   };
 
-  function renderTasksView() {
+  function updateView() {
     const currentPage = document.querySelector(".view h1");
     if (currentPage.textContent === "All Tasks") {
-      tasksView.render();
+      tasksView.renderView();
     }
   }
+
   const taskStats = document.querySelector(".task-stats");
-  taskStats.textContent = tasks.length;
-  console.log(tasks, tasks.length);
-  function updateStats() {}
+  function renderStats() {
+    const tasks = storeTask.tasks;
+    taskStats.textContent = tasks.length;
+  }
 
-  pubsub.subscribe("taskAdded", renderTasksView, updateStats);
+  function updateStats() {
+    taskStats.textContent++;
+  }
 
-  return { render };
+  pubsub.subscribe("taskAdded", updateView, updateStats);
+
+  return { renderView, renderStats };
 })();

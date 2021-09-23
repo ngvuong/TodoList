@@ -6,7 +6,7 @@ import { pubsub } from "./pubsub";
 
 export const todayView = (function () {
   const view = document.querySelector(".view");
-  view.textContent = "";
+  // view.textContent = "";
   const heading = document.createElement("h1");
   heading.textContent = "Today's Tasks";
 
@@ -20,20 +20,16 @@ export const todayView = (function () {
   const today = format(new Date(), "yyyy-MM-dd");
   const tasks = storeTask.tasks;
   const todayStats = document.querySelector(".today-stats");
-  todayStats.textContent = tasks.filter((task) => task.date === today).length;
-  console.log(tasks, tasks.length);
 
-  const render = () => {
-    console.log(tasks, tasks.length);
-    // const view = document.querySelector(".view");
+  function renderView() {
     view.textContent = "";
     taskList.textContent = "";
 
     for (const task of tasks) {
       renderTask(task);
     }
-    view.append(heading, taskList);
-  };
+    view.append(heading, btn, taskList);
+  }
   pubsub.subscribe("taskAdded", renderTask, updateStats);
   function renderTask(task) {
     if (task.date === today) {
@@ -41,7 +37,9 @@ export const todayView = (function () {
     }
   }
 
-  render();
+  function renderStats() {
+    todayStats.textContent = tasks.filter((task) => task.date === today).length;
+  }
 
   function updateStats(task) {
     if (task.date === today) {
@@ -49,5 +47,5 @@ export const todayView = (function () {
     }
   }
 
-  return { render };
+  return { renderView, renderStats };
 })();

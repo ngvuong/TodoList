@@ -4,7 +4,7 @@ import { storeTask, storeProject } from "./storage";
 
 export const projectView = (function () {
   const view = document.querySelector(".view");
-  view.textContent = "";
+  // view.textContent = "";
 
   const heading = document.createElement("h1");
   heading.textContent = "Projects";
@@ -14,7 +14,7 @@ export const projectView = (function () {
   const projectList = document.createElement("section");
   projectList.classList.add("project-list");
 
-  const render = () => {
+  const renderView = () => {
     view.textContent = "";
     projectList.textContent = "";
 
@@ -30,6 +30,7 @@ export const projectView = (function () {
     for (const key in tasksByProject) {
       const project = document.createElement("div");
       project.textContent = key;
+
       tasksByProject[key].forEach((task) => {
         const taskItem = buildTaskView(task);
         project.appendChild(taskItem);
@@ -39,14 +40,21 @@ export const projectView = (function () {
     view.append(heading, projectList);
   };
 
-  pubsub.subscribe("taskAdded", renderProjectView);
-
-  function renderProjectView(task) {
+  function updateView(task) {
     const currentPage = document.querySelector(".view h1");
     if (currentPage.textContent === "Projects") {
-      projectView.render();
+      projectView.renderView();
     }
   }
 
-  return { render };
+  const projectStats = document.querySelector(".project-stats");
+  function renderStats() {
+    projectStats.textContent = projects.length;
+  }
+  function updateStats() {
+    projectStats.textContent = projects.length;
+  }
+  pubsub.subscribe("taskAdded", updateView, updateStats);
+
+  return { renderView, renderStats };
 })();
