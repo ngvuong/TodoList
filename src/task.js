@@ -1,13 +1,21 @@
 import { storeProject, storeTask } from "./storage";
 import { tasksView } from "./tasks-view";
 
-export function Task(name, notes, date, priority, project = "No Project") {
+export function Task(
+  name,
+  notes,
+  date,
+  priority,
+  project = "No Project",
+  completed = "false"
+) {
   return {
     name,
     notes,
     date,
     priority,
     project,
+    completed,
   };
 }
 

@@ -30,7 +30,6 @@ export const todayView = (function () {
     }
     view.append(heading, btn, taskList);
   }
-  pubsub.subscribe("taskAdded", renderTask, updateStats);
   function renderTask(task) {
     if (task.date === today) {
       taskList.append(buildTaskView(task));
@@ -41,11 +40,23 @@ export const todayView = (function () {
     todayStats.textContent = tasks.filter((task) => task.date === today).length;
   }
 
-  function updateStats(task) {
+  function addTask(task) {
     if (task.date === today) {
       todayStats.textContent++;
     }
   }
 
+  function completeTask(task) {
+    if (task.date === today) {
+      todayStats.textContent--;
+    }
+  }
+
+  function deleteTask(task) {}
+
+  pubsub.subscribe("taskAdded", renderTask, addTask);
+  pubsub.subscribe("taskChecked", completeTask);
+  pubsub.subscribe("taskUnchecked", addTask);
+  // pubsub.subscribe('taskDeleted', )
   return { renderView, renderStats };
 })();

@@ -54,6 +54,7 @@ export const projectView = (function () {
   function updateStats() {
     projectStats.textContent = projects.length;
   }
+
   pubsub.subscribe("taskAdded", updateView, updateStats);
 
   return { renderView, renderStats };

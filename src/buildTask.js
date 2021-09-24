@@ -47,14 +47,21 @@ export function buildTaskView(task) {
     const date = formClone.date;
     const priority = formClone.priority;
     const project = formClone.project;
+    const save = formClone.save;
+    const del = formClone.cancel;
+    del.classList.remove("cancel");
+    del.value = "Delete";
+    del.addEventListener("click", () => pubsub.publish("taskDeleted", task));
+
     name.value = task.name;
     notes.value = task.notes;
     date.value = task.date;
     priority.value = task.priority;
     project.value = task.project;
-
+    save.textContent = "Save";
     formClone.firstElementChild.remove();
-    formClone.lastElementChild.remove();
+    // formClone.lastElementChild.remove();
+
     return formClone;
   }
 
