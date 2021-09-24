@@ -107,7 +107,7 @@ body {
 
 .task-form {
   position: relative;
-  width: 50%;
+  width: max-content;
   /* height: 50%; */
   display: flex;
   flex-direction: column;
@@ -119,7 +119,7 @@ body {
 form input,
 form textarea,
 form select {
-  font-size: 3vmin;
+  font-size: 2vmin;
 }
 form {
   font-size: 2vmin;
@@ -152,28 +152,22 @@ textarea {
 
 .task-short {
   display: grid;
-  grid-template-columns: 1em 1fr 3fr 0.5fr 1em;
+  grid-template-columns: 1em 1fr 3fr 1em;
   align-content: center;
-  border-left: 1px solid red;
-  border-left-width: 5px;
+  border-left: 10px double;
   margin: 0.1rem 0 0.1rem 0;
   width: 100%;
   background-color: #e1c340;
   height: 1.5em;
   position: relative;
-  border-radius: 20px;
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
 }
 
 .task-short *:nth-child(3) {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
-}
-
-.task-short span {
-  /* padding-left: 0.5em; */
 }
 
 .task-short:hover {
@@ -208,9 +202,7 @@ textarea {
 .task-short.hidden::after {
   content: "\02303";
   line-height: 1.2em;
-  /* visibility: visible; */
-  /* position: fixed;
-  right: 1em; */
+  padding-top: 0.5em;
 }
 
 .check-task {
@@ -259,14 +251,14 @@ textarea {
   max-height: 100%;
 }
 
-.task-form * {
-  padding: 0.5em;
+form * {
+  margin: 0.5em;
 }
 
 .info-group {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  /* align-items: center; */
 }
 
 .form-info {
@@ -314,6 +306,12 @@ textarea {
   }
   .view {
     margin: auto;
+  }
+}
+
+@media screen and (max-width: 950px) {
+  .view {
+    margin-right: 2vmin;
   }
 }
 

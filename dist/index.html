@@ -13,9 +13,18 @@
       <nav class="view-nav">
         <span class="nav-icon"></span>
         <button class="task-btn create-btn">New Task</button>
-        <div class="today"><button class="nav-btn today-view">Today</button><span class="nav-stats today-stats"></span></div>
-        <div class="tasks"><button class="nav-btn all-tasks-view">Tasks</button><span class="nav-stats task-stats"></span></div>
-        <div class="projects"><button class="nav-btn project-view">Projects</button><span class="nav-stats project-stats"></span></div>
+        <div class="today">
+          <button class="nav-btn today-view">Today</button
+          ><span class="nav-stats today-stats"></span>
+        </div>
+        <div class="tasks">
+          <button class="nav-btn all-tasks-view">Tasks</button
+          ><span class="nav-stats task-stats"></span>
+        </div>
+        <div class="projects">
+          <button class="nav-btn project-view">Projects</button
+          ><span class="nav-stats project-stats"></span>
+        </div>
         <button class="project-btn create-btn">New Project</button>
       </nav>
       <main class="view"></main>
@@ -25,38 +34,35 @@
         <h2>Add a New Task</h2>
         <div class="form-info">
           <div class="info-group">
-            <label for="name"
-              ><input id="name" type="text" name="name" placeholder="Task Name"
-            /></label>
-            <label for="notes"></label>
-              <textarea
-                name="notes"
-                id="notes"
-                cols="20"
-                rows="5"
-                placeholder="Description"
-              ></textarea>
-            </label>
-            <label for="project"
-              ><input
-                id="project"
-                type="text"
-                name="project"
-                placeholder="Project"
-            /></label>
+            <input id="name" type="text" name="name" placeholder="Task Name" />
+
+            <textarea
+              name="notes"
+              id="notes"
+              cols="20"
+              rows="5"
+              placeholder="Description"
+            ></textarea>
+
+            <input
+              id="project"
+              type="text"
+              name="project"
+              placeholder="Project"
+            />
           </div>
           <div class="info-group">
-            <label 
+            <label
               >Due Date <input type="date" id="due-date" name="date"
             /></label>
             <label for="priority"
-              >Priority <select name="priority" id="priority">
+              >Priority
+              <select name="priority" id="priority">
                 <option value="!">!</option>
                 <option value="!!">!!</option>
                 <option value="!!!">!!!</option>
               </select></label
             >
-            
           </div>
         </div>
         <button name="save">Submit</button>

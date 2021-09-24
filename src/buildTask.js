@@ -5,7 +5,6 @@ export function buildTaskView(task) {
   const taskShort = document.createElement("div");
   const name = document.createElement("span");
   const notes = document.createElement("span");
-  const priority = document.createElement("span");
   const checkbox = document.createElement("input");
   checkbox.type = "checkbox";
   checkbox.classList.add("check-task");
@@ -29,14 +28,13 @@ export function buildTaskView(task) {
   name.textContent = `${task.name}`;
   notes.textContent = `${task.notes}`;
 
-  priority.textContent = `${task.priority}`;
-  taskShort.append(checkbox, name, notes, priority);
+  taskShort.append(checkbox, name, notes);
 
   if (task.priority === "!!!") {
-    taskShort.style.borderBottomColor = "red";
+    taskShort.style.borderLeftColor = "red";
   } else if (task.priority === "!!") {
-    taskShort.style.borderBottomColor = "blue";
-  } else taskShort.style.borderBottomColor = "green";
+    taskShort.style.borderLeftColor = "blue";
+  } else taskShort.style.borderLeftColor = "green";
 
   const taskFull = buildExpandedTask(task);
   taskItem.append(taskShort, taskFull);
