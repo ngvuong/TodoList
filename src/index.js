@@ -13,7 +13,13 @@ import { pubsub } from "./pubsub";
   const task1 = Task("task1", "test", "2021-09-16", "!!!", "project1");
   const task2 = Task("task2", "test", "2021-09-15", "!!!", "Project2");
   const today = format(new Date(), "yyyy-MM-dd");
-  const task3 = Task("task2", "test", today, "!!!", "project2");
+  const task3 = Task(
+    "task2",
+    "testing out this description thinggie majig blahblahblah",
+    today,
+    "!!!",
+    "project2"
+  );
   storeTask.store(task1, task2, task3);
   storeProject.store(task1.project, task2.project, task3.project);
   todayView.renderView();

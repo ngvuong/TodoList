@@ -9,16 +9,14 @@ export const projectView = (function () {
   const heading = document.createElement("h1");
   heading.textContent = "Projects";
 
-  const projects = storeProject.projects;
   const tasks = storeTask.tasks;
   const taskList = document.createElement("section");
   taskList.classList.add("task-list");
+  const projects = tasks.map((task) => task.project.toLowerCase());
+  // .filter((task, i) => tasks.indexOf(task) === i);
 
-  const renderView = () => {
-    view.textContent = "";
-    taskList.textContent = "";
-
-    const tasksByProject = tasks.reduce((acc, task) => {
+  function makeTasksByProject() {
+    const obj = tasks.reduce((acc, task) => {
       const project = task.project.toLowerCase();
       if (acc[project]) {
         acc[project].push(task);
@@ -26,6 +24,14 @@ export const projectView = (function () {
 
       return acc;
     }, {});
+
+    return obj;
+  }
+  const renderView = () => {
+    view.textContent = "";
+    taskList.textContent = "";
+
+    const tasksByProject = makeTasksByProject();
 
     for (const key in tasksByProject) {
       const project = document.createElement("div");
@@ -49,13 +55,16 @@ export const projectView = (function () {
 
   const projectStats = document.querySelector(".project-stats");
   function renderStats() {
-    projectStats.textContent = projects.length;
-  }
-  function updateStats() {
-    projectStats.textContent = projects.length;
+    projectStats.textContent = Object.keys(makeTasksByProject()).length;
   }
 
-  pubsub.subscribe("taskAdded", updateView, updateStats);
+  function deleteTask(task) {
+    renderStats();
+    updateView();
+  }
+
+  pubsub.subscribe("taskAdded", updateView, renderStats);
+  pubsub.subscribe("taskDeleted", deleteTask);
 
   return { renderView, renderStats };
 })();

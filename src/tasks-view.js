@@ -57,9 +57,16 @@ export const tasksView = (function () {
   function completeTask() {
     taskStats.textContent--;
   }
-
+  function deleteTask(task) {
+    updateView();
+    if (!task.completed) {
+      taskStats.textContent--;
+    }
+  }
   pubsub.subscribe("taskAdded", updateView, addTask);
   pubsub.subscribe("taskChecked", completeTask);
   pubsub.subscribe("taskUnchecked", addTask);
+  pubsub.subscribe("taskDeleted", deleteTask);
+
   return { renderView, renderStats };
 })();

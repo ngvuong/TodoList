@@ -54,8 +54,11 @@ export const todayView = (function () {
 
   function deleteTask(task) {
     const currentPage = document.querySelector(".view h1");
-    if (currentPage === "Today's Tasks") {
+    if (currentPage.textContent === "Today's Tasks") {
       todayView.renderView();
+    }
+    if (task.date === today && !task.completed) {
+      todayStats.textContent--;
     }
   }
 

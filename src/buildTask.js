@@ -27,11 +27,8 @@ export function buildTaskView(task) {
   taskItem.classList.add("task-item");
   taskShort.classList.add("task-short");
   name.textContent = `${task.name}`;
-  if (task.notes.length < 30) {
-    notes.textContent = `${task.notes}`;
-  } else {
-    notes.textContent = `${task.notes.slice(0, 28)}...`;
-  }
+  notes.textContent = `${task.notes}`;
+
   priority.textContent = `${task.priority}`;
   taskShort.append(checkbox, name, notes, priority);
 
@@ -63,6 +60,10 @@ export function buildTaskView(task) {
       storeTask.remove(task);
       pubsub.publish("taskDeleted", task);
     });
+    save.addEventListener("click", (e) => {
+      e.preventDefault();
+      modifyTask(task);
+    });
 
     name.value = task.name;
     notes.value = task.notes;
@@ -71,7 +72,6 @@ export function buildTaskView(task) {
     project.value = task.project;
     save.textContent = "Save";
     formClone.firstElementChild.remove();
-    // formClone.lastElementChild.remove();
 
     return formClone;
   }
@@ -86,6 +86,8 @@ export function buildTaskView(task) {
       expanded.style.maxHeight = `${expanded.scrollHeight}px`;
     }
   }
+
+  function modifyTask() {}
 
   return taskItem;
 }
