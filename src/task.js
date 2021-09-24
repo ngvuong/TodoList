@@ -7,7 +7,7 @@ export function Task(
   date,
   priority,
   project = "No Project",
-  completed = "false"
+  completed = false
 ) {
   return {
     name,

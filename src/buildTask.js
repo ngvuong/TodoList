@@ -1,5 +1,5 @@
 import { pubsub } from "./pubsub";
-
+import { storeTask } from "./storage";
 export function buildTaskView(task) {
   const taskItem = document.createElement("div");
   const taskShort = document.createElement("div");
@@ -13,9 +13,17 @@ export function buildTaskView(task) {
     e.stopPropagation();
     taskShort.classList.toggle("completed");
     if (checkbox.checked) {
+      task.completed = true;
       pubsub.publish("taskChecked", task);
-    } else pubsub.publish("taskUnchecked", task);
+    } else {
+      task.completed = false;
+      pubsub.publish("taskUnchecked", task);
+    }
   });
+  if (task.completed) {
+    checkbox.checked = true;
+    taskShort.classList.add("completed");
+  }
   taskItem.classList.add("task-item");
   taskShort.classList.add("task-short");
   name.textContent = `${task.name}`;
@@ -51,7 +59,10 @@ export function buildTaskView(task) {
     const del = formClone.cancel;
     del.classList.remove("cancel");
     del.value = "Delete";
-    del.addEventListener("click", () => pubsub.publish("taskDeleted", task));
+    del.addEventListener("click", () => {
+      storeTask.remove(task);
+      pubsub.publish("taskDeleted", task);
+    });
 
     name.value = task.name;
     notes.value = task.notes;

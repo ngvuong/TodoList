@@ -52,11 +52,16 @@ export const todayView = (function () {
     }
   }
 
-  function deleteTask(task) {}
+  function deleteTask(task) {
+    const currentPage = document.querySelector(".view h1");
+    if (currentPage === "Today's Tasks") {
+      todayView.renderView();
+    }
+  }
 
   pubsub.subscribe("taskAdded", renderTask, addTask);
   pubsub.subscribe("taskChecked", completeTask);
   pubsub.subscribe("taskUnchecked", addTask);
-  // pubsub.subscribe('taskDeleted', )
+  pubsub.subscribe("taskDeleted", deleteTask);
   return { renderView, renderStats };
 })();

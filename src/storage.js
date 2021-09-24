@@ -3,11 +3,10 @@ export const storeTask = (() => {
   const tasks = [];
 
   const store = (...task) => tasks.push(...task);
-  const modify = (task) => {
-    console.log(tasks.findIndex((t) => t === task));
+  const remove = (task) => {
+    tasks.splice(tasks.indexOf(task), 1);
   };
-  pubsub.subscribe("taskChecked", modify);
-  return { tasks, store };
+  return { tasks, store, remove };
 })();
 
 export const storeProject = (() => {
