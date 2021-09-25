@@ -33,7 +33,7 @@
       <form class="task-form">
         <h2>Add a New Task</h2>
         <div class="form-info">
-          <div class="info-group">
+          <fieldset class="info-group">
             <input id="name" type="text" name="name" placeholder="Task Name" />
 
             <textarea
@@ -50,8 +50,8 @@
               name="project"
               placeholder="Project"
             />
-          </div>
-          <div class="info-group">
+          </fieldset>
+          <fieldset class="info-group">
             <label
               >Due Date <input type="date" id="due-date" name="date"
             /></label>
@@ -63,7 +63,7 @@
                 <option value="!!!">!!!</option>
               </select></label
             >
-          </div>
+          </fieldset>
         </div>
         <button name="save">Submit</button>
         <input type="button" value="X" name="cancel" class="cancel" />
