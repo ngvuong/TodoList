@@ -51,6 +51,7 @@ export function buildTaskView(task) {
     const priority = formClone.priority;
     const project = formClone.project;
     const save = formClone.save;
+    save.disabled = true;
     const del = formClone.cancel;
     del.classList.remove("cancel");
     del.value = "Delete";
@@ -60,9 +61,13 @@ export function buildTaskView(task) {
     });
     save.addEventListener("click", (e) => {
       e.preventDefault();
-      modifyTask(task);
+      modifyTask(task, formClone);
+      pubsub.publish("taskUpdated", task);
     });
 
+    [name, notes, date, priority, project].forEach((item) =>
+      item.addEventListener("change", () => (save.disabled = false))
+    );
     name.value = task.name;
     notes.value = task.notes;
     date.value = task.date;
@@ -85,7 +90,13 @@ export function buildTaskView(task) {
     }
   }
 
-  function modifyTask() {}
+  function modifyTask(task, form) {
+    task.name = form.name.value;
+    task.notes = form.notes.value;
+    task.project = form.project.value;
+    task.date = form.date.value;
+    task.priority = form.priority.value;
+  }
 
   return taskItem;
 }

@@ -37,7 +37,9 @@ export const todayView = (function () {
   }
 
   function renderStats() {
-    todayStats.textContent = tasks.filter((task) => task.date === today).length;
+    todayStats.textContent = tasks.filter(
+      (task) => task.date === today && !task.completed
+    ).length;
   }
 
   function addTask(task) {
@@ -46,25 +48,24 @@ export const todayView = (function () {
     }
   }
 
-  function completeTask(task) {
-    if (task.date === today) {
-      todayStats.textContent--;
-    }
-  }
+  // function completeTask(task) {
+  //   if (task.date === today) {
+  //     todayStats.textContent--;
+  //   }
+  // }
 
-  function deleteTask(task) {
+  function updateView(task) {
     const currentPage = document.querySelector(".view h1");
     if (currentPage.textContent === "Today's Tasks") {
-      todayView.renderView();
+      renderView();
     }
-    if (task.date === today && !task.completed) {
-      todayStats.textContent--;
-    }
+    renderStats();
   }
 
   pubsub.subscribe("taskAdded", renderTask, addTask);
-  pubsub.subscribe("taskChecked", completeTask);
-  pubsub.subscribe("taskUnchecked", addTask);
-  pubsub.subscribe("taskDeleted", deleteTask);
+  pubsub.subscribe("taskChecked", updateView);
+  pubsub.subscribe("taskUnchecked", updateView);
+  pubsub.subscribe("taskDeleted", updateView);
+  pubsub.subscribe("taskUpdated", updateView);
   return { renderView, renderStats };
 })();
