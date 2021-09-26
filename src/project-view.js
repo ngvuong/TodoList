@@ -51,6 +51,7 @@ export const projectView = (function () {
     if (currentPage.textContent === "Projects") {
       projectView.renderView();
     }
+    renderStats();
   }
 
   const projectStats = document.querySelector(".project-stats");
@@ -58,13 +59,13 @@ export const projectView = (function () {
     projectStats.textContent = Object.keys(makeTasksByProject()).length;
   }
 
-  function deleteTask(task) {
-    renderStats();
-    updateView();
-  }
+  // function deleteTask(task) {
+  //   renderStats();
+  //   updateView();
+  // }
 
-  pubsub.subscribe("taskAdded", updateView, renderStats);
-  pubsub.subscribe("taskDeleted", deleteTask);
+  pubsub.subscribe("taskAdded", updateView);
+  pubsub.subscribe("taskDeleted", updateView);
 
   return { renderView, renderStats };
 })();

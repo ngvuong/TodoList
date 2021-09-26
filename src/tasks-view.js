@@ -43,30 +43,31 @@ export const tasksView = (function () {
     if (currentPage.textContent === "All Tasks") {
       tasksView.renderView();
     }
+    renderStats;
   }
 
   const taskStats = document.querySelector(".task-stats");
   function renderStats() {
     const tasks = storeTask.tasks;
-    taskStats.textContent = tasks.length;
+    taskStats.textContent = tasks.filter((task) => !task.completed);
   }
 
-  function addTask() {
-    taskStats.textContent++;
-  }
-  function completeTask() {
-    taskStats.textContent--;
-  }
-  function deleteTask(task) {
-    updateView();
-    if (!task.completed) {
-      taskStats.textContent--;
-    }
-  }
-  pubsub.subscribe("taskAdded", updateView, addTask);
-  pubsub.subscribe("taskChecked", completeTask);
-  pubsub.subscribe("taskUnchecked", addTask);
-  pubsub.subscribe("taskDeleted", deleteTask);
-
+  // function addTask() {
+  //   taskStats.textContent++;
+  // }
+  // function completeTask() {
+  //   taskStats.textContent--;
+  // }
+  // function deleteTask(task) {
+  //   updateView();
+  //   if (!task.completed) {
+  //     taskStats.textContent--;
+  //   }
+  // }
+  pubsub.subscribe("taskAdded", updateView);
+  pubsub.subscribe("taskChecked", updateView);
+  pubsub.subscribe("taskUnchecked", updateView);
+  pubsub.subscribe("taskDeleted", updateView);
+  pubsub.subscribe("taskUpdated", updateView);
   return { renderView, renderStats };
 })();
