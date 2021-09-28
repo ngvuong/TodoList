@@ -33,16 +33,29 @@ export const weekView = (function () {
         }
       });
       taskList.appendChild(group);
-      view.append(heading, taskList);
     });
+    view.append(heading, taskList);
   }
 
   const weekStats = document.querySelector(".week-stats");
   function renderStats() {
-    weekStats.textContent = tasks.filter((task) =>
-      weekAhead.includes(task.date)
+    weekStats.textContent = tasks.filter(
+      (task) => weekAhead.includes(task.date) && !task.completed
     ).length;
   }
 
+  function updateView() {
+    const currentPage = document.querySelector(".view h1");
+    if (currentPage.textContent === "Week Ahead") {
+      renderView();
+    }
+    renderStats();
+  }
+
+  pubsub.subscribe("taskAdded", updateView);
+  pubsub.subscribe("taskChecked", updateView);
+  pubsub.subscribe("taskUnchecked", updateView);
+  pubsub.subscribe("taskDeleted", updateView);
+  pubsub.subscribe("taskUpdated", updateView);
   return { renderView, renderStats };
 })();

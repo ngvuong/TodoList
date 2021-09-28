@@ -28,7 +28,7 @@ export const todayView = (function () {
     for (const task of tasks) {
       renderTask(task);
     }
-    view.append(heading, btn, taskList);
+    view.append(heading, taskList);
   }
   function renderTask(task) {
     if (task.date === today) {
@@ -42,11 +42,11 @@ export const todayView = (function () {
     ).length;
   }
 
-  function addTask(task) {
-    if (task.date === today) {
-      todayStats.textContent++;
-    }
-  }
+  // function addTask(task) {
+  //   if (task.date === today) {
+  //     todayStats.textContent++;
+  //   }
+  // }
 
   // function completeTask(task) {
   //   if (task.date === today) {
@@ -62,7 +62,7 @@ export const todayView = (function () {
     renderStats();
   }
 
-  pubsub.subscribe("taskAdded", renderTask, addTask);
+  pubsub.subscribe("taskAdded", updateView);
   pubsub.subscribe("taskChecked", updateView);
   pubsub.subscribe("taskUnchecked", updateView);
   pubsub.subscribe("taskDeleted", updateView);
