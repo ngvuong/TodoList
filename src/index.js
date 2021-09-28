@@ -25,8 +25,9 @@ import { pubsub } from "./pubsub";
   storeProject.store(task1.project, task2.project, task3.project);
   todayView.renderView();
   todayView.renderStats();
-  tasksView.renderStats();
+  weekView.renderStats();
   projectView.renderStats();
+  tasksView.renderStats();
 
   const navBtns = document.querySelectorAll(".nav-btn");
   navBtns.forEach((btn) => btn.addEventListener("click", renderView));

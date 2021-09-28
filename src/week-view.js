@@ -16,7 +16,6 @@ export const weekView = (function () {
   }
   function renderView() {
     view.textContent = "";
-    console.log(weekAhead);
     const taskList = document.createElement("div");
     taskList.classList.add("task-list");
 
@@ -34,9 +33,16 @@ export const weekView = (function () {
         }
       });
       taskList.appendChild(group);
+      view.append(heading, taskList);
     });
-    view.append(heading, taskList);
   }
 
-  return { renderView };
+  const weekStats = document.querySelector(".week-stats");
+  function renderStats() {
+    weekStats.textContent = tasks.filter((task) =>
+      weekAhead.includes(task.date)
+    ).length;
+  }
+
+  return { renderView, renderStats };
 })();
