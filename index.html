@@ -11,7 +11,11 @@
     <div class="grid-container">
       <header class="title">TodoIt</header>
       <nav class="view-nav">
-        <span class="nav-icon"></span>
+        <div class="nav-icon">
+          <div></div>
+          <div></div>
+          <div></div>
+        </div>
         <button class="task-btn create-btn">New Task</button>
         <div class="today">
           <button class="nav-btn today-view">Today</button
@@ -29,7 +33,6 @@
           <button class="nav-btn all-tasks-view">Archive</button
           ><span class="nav-stats task-stats"></span>
         </div>
-        <button class="project-btn create-btn">New Project</button>
       </nav>
       <main class="view"></main>
     </div>
@@ -69,7 +72,7 @@
             >
           </div>
         </div>
-        <button name="save">Submit</button>
+        <button name="save" class="save">Submit</button>
         <input type="button" value="X" name="cancel" class="cancel" />
       </form>
     </div>
