@@ -41,15 +41,15 @@ export const tasksView = (function () {
   function updateView() {
     const currentPage = document.querySelector(".view h1");
     if (currentPage.textContent === "All Tasks") {
-      tasksView.renderView();
+      renderView();
     }
-    renderStats;
+    renderStats();
   }
 
   const taskStats = document.querySelector(".task-stats");
   function renderStats() {
     const tasks = storeTask.tasks;
-    taskStats.textContent = tasks.filter((task) => !task.completed);
+    taskStats.textContent = tasks.filter((task) => !task.completed).length;
   }
 
   // function addTask() {

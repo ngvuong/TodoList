@@ -2,6 +2,7 @@ import { Task } from "./task";
 import { todayView } from "./today-view";
 import { tasksView } from "./tasks-view";
 import { projectView } from "./project-view";
+import { weekView } from "./week-view";
 import { storeTask, storeProject } from "./storage";
 import { format } from "date-fns";
 import { buildTaskView, buildExpandedTaskView } from "./buildTask";
@@ -39,6 +40,8 @@ import { pubsub } from "./pubsub";
         todayView.renderView();
       } else if (page === "Tasks") {
         tasksView.renderView();
+      } else if (page === "Week Ahead") {
+        weekView.renderView();
       } else projectView.renderView();
     }
   }

@@ -49,7 +49,7 @@ export const projectView = (function () {
   function updateView(task) {
     const currentPage = document.querySelector(".view h1");
     if (currentPage.textContent === "Projects") {
-      projectView.renderView();
+      renderView();
     }
     renderStats();
   }
@@ -66,6 +66,7 @@ export const projectView = (function () {
 
   pubsub.subscribe("taskAdded", updateView);
   pubsub.subscribe("taskDeleted", updateView);
+  pubsub.subscribe("taskUpdated", updateView);
 
   return { renderView, renderStats };
 })();
