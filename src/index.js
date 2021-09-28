@@ -29,6 +29,10 @@ import { pubsub } from "./pubsub";
   projectView.renderStats();
   tasksView.renderStats();
 
+  const nav = document.querySelector(".view-nav");
+  const navIcon = document.querySelector(".nav-icon");
+  navIcon.addEventListener("click", () => nav.classList.toggle("toggle"));
+
   const navBtns = document.querySelectorAll(".nav-btn");
   navBtns.forEach((btn) => btn.addEventListener("click", renderView));
 
