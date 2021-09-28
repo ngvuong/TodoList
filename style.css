@@ -15,7 +15,7 @@ body {
   border: 0;
   /* background-color: rgba(68, 80, 92, 1); */
   background-color: rgb(236, 236, 236);
-  /* color: white; */
+  /* color: #e8e6e3; */
 }
 
 .grid-container {
@@ -149,7 +149,7 @@ textarea {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 80%;
+  width: 100%;
 }
 
 .task-short {
@@ -234,7 +234,9 @@ textarea {
 }
 
 .group-name {
+  /* width: 80%; */
   border-bottom: 1px solid black;
+  margin-bottom: 10px;
 }
 
 .task-expanded {
@@ -278,7 +280,7 @@ form * {
 }
 
 .task-expanded * {
-  background-color: yellow;
+  /* background-color: yellow; */
   border: none;
 }
 
