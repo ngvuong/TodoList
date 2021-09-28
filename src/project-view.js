@@ -35,8 +35,11 @@ export const projectView = (function () {
 
     for (const key in tasksByProject) {
       const project = document.createElement("div");
+      const projectName = document.createElement("div");
+      projectName.textContent = key;
+      projectName.classList.add("project-name");
       project.classList.add("task-group");
-      project.textContent = key;
+      project.appendChild(projectName);
       tasksByProject[key].forEach((task) => {
         const taskItem = buildTaskView(task);
         project.appendChild(taskItem);

@@ -22,7 +22,7 @@ export const weekView = (function () {
 
     weekAhead.forEach((date) => {
       const group = document.createElement("div");
-      // group.classList.add("task-group");
+      group.classList.add("task-group");
       const day = document.createElement("div");
       day.classList.add("group-name");
       day.textContent = format(parseISO(date), "EEEE, MMM d");

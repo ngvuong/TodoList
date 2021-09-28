@@ -15,7 +15,8 @@ body {
   border: 0;
   /* background-color: rgba(68, 80, 92, 1); */
   background-color: rgb(236, 236, 236);
-  /* color: #e8e6e3; */
+  background-color: rgb(36, 36, 36);
+  color: #e8e6e3;
 }
 
 .grid-container {
@@ -48,7 +49,7 @@ body {
   min-width: 250px;
   max-width: 70%;
   min-height: 90vh;
-  background-color: rgb(89, 253, 253);
+  background-color: rgb(20, 180, 180);
 }
 
 .today,
@@ -68,6 +69,7 @@ body {
   border: none;
   /* margin: 15% 0 0 15%; */
   cursor: pointer;
+  color: white;
 }
 
 .create-btn {
@@ -97,7 +99,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin: 0 15vmin 0 0;
+  margin: 0 15vmin 0 2vmin;
   grid-area: main;
 }
 
@@ -150,6 +152,7 @@ textarea {
   flex-direction: column;
   align-items: center;
   width: 100%;
+  margin-bottom: 10px;
 }
 
 .task-short {
@@ -159,7 +162,9 @@ textarea {
   border-left: 10px double;
   margin: 0.1rem 0 0.1rem 0;
   width: 100%;
-  background-color: #e1c340;
+  background-color: rgb(100, 100, 100);
+  background-color: rgb(150, 4, 80);
+  background-color: #ffcc20;
   height: 1.5em;
   position: relative;
   border-top-right-radius: 20px;
@@ -217,7 +222,7 @@ textarea {
   display: flex;
   flex-direction: column;
   align-items: center;
-  width: 100%;
+  width: 90%;
   text-transform: capitalize;
 }
 
@@ -235,10 +240,14 @@ textarea {
 
 .group-name {
   /* width: 80%; */
-  border-bottom: 1px solid black;
+  border-bottom: 1px solid rgb(140, 130, 115);
   margin-bottom: 10px;
 }
-
+.project-name {
+  text-align: center;
+  text-decoration: underline red;
+  margin-bottom: 10px;
+}
 .task-expanded {
   /* position: fixed; */
   display: flex;
@@ -285,7 +294,7 @@ form * {
 }
 
 .task-short.completed {
-  filter: grayscale(100%);
+  filter: grayscale(80%);
 }
 .task-short.completed::before {
   position: absolute;
@@ -294,7 +303,7 @@ form * {
   width: 95%;
   left: 2%;
   top: 50%;
-  background: black;
+  background: gray;
 }
 
 @media screen and (max-width: 768px) {
@@ -320,7 +329,7 @@ form * {
 
 @media screen and (max-width: 950px) {
   .view {
-    margin-right: 2vmin;
+    margin-right: 0;
   }
 }
 
