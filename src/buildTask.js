@@ -33,8 +33,8 @@ export function buildTaskView(task) {
   if (task.priority === "!!!") {
     taskShort.style.borderLeftColor = "red";
   } else if (task.priority === "!!") {
-    taskShort.style.borderLeftColor = "blue";
-  } else taskShort.style.borderLeftColor = "green";
+    taskShort.style.borderLeftColor = "#4b4bff";
+  } else taskShort.style.borderLeftColor = "lime";
 
   const taskFull = buildExpandedTask(task);
   taskItem.append(taskShort, taskFull);

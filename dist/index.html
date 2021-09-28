@@ -21,13 +21,13 @@
           <button class="nav-btn week-view">Week Ahead</button
           ><span class="nav-stats week-stats"></span>
         </div>
-        <div class="tasks">
-          <button class="nav-btn all-tasks-view">Tasks</button
-          ><span class="nav-stats task-stats"></span>
-        </div>
         <div class="projects">
           <button class="nav-btn project-view">Projects</button
           ><span class="nav-stats project-stats"></span>
+        </div>
+        <div class="tasks">
+          <button class="nav-btn all-tasks-view">Archive</button
+          ><span class="nav-stats task-stats"></span>
         </div>
         <button class="project-btn create-btn">New Project</button>
       </nav>
@@ -37,7 +37,7 @@
       <form class="task-form">
         <h2>Add a New Task</h2>
         <div class="form-info">
-          <fieldset class="info-group">
+          <div class="info-group">
             <input id="name" type="text" name="name" placeholder="Task Name" />
 
             <textarea
@@ -54,8 +54,8 @@
               name="project"
               placeholder="Project"
             />
-          </fieldset>
-          <fieldset class="info-group">
+          </div>
+          <div class="info-group">
             <label
               >Due Date <input type="date" id="due-date" name="date"
             /></label>
@@ -67,7 +67,7 @@
                 <option value="!!!">!!!</option>
               </select></label
             >
-          </fieldset>
+          </div>
         </div>
         <button name="save">Submit</button>
         <input type="button" value="X" name="cancel" class="cancel" />

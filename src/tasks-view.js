@@ -1,6 +1,7 @@
 import { storeTask } from "./storage";
 import { buildTaskView } from "./buildTask";
 import { pubsub } from "./pubsub";
+import { format, parseISO } from "date-fns";
 
 export const tasksView = (function () {
   const heading = document.createElement("h1");
@@ -27,7 +28,9 @@ export const tasksView = (function () {
     }, {});
     for (const date in tasksByDate) {
       const group = document.createElement("div");
-      group.textContent = date;
+      const groupName = document.createElement("div");
+      groupName.textContent = format(parseISO(date), "EEEE, MMM d, yyyy");
+      group.appendChild(groupName);
       group.classList.add("task-group");
       tasksByDate[date].forEach((task) => {
         const taskItem = buildTaskView(task);

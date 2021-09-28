@@ -38,11 +38,11 @@ import { pubsub } from "./pubsub";
       currentPage = page;
       if (page === "Today") {
         todayView.renderView();
-      } else if (page === "Tasks") {
-        tasksView.renderView();
       } else if (page === "Week Ahead") {
         weekView.renderView();
-      } else projectView.renderView();
+      } else if (page === "Projects") {
+        projectView.renderView();
+      } else tasksView.renderView();
     }
   }
 })();

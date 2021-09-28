@@ -1,6 +1,6 @@
 import { storeTask } from "./storage";
 import { buildTaskView } from "./buildTask";
-import { format, startOfTomorrow, addDays, parseISO } from "date-fns";
+import { format, addDays, parseISO } from "date-fns";
 import { pubsub } from "./pubsub";
 
 export const weekView = (function () {
