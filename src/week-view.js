@@ -17,14 +17,25 @@ export const weekView = (function () {
   function renderView() {
     view.textContent = "";
     console.log(weekAhead);
+    const taskList = document.createElement("div");
+    taskList.classList.add("task-list");
 
     weekAhead.forEach((date) => {
       const group = document.createElement("div");
+      group.classList.add("task-group");
       const day = document.createElement("div");
+      day.classList.add("group-name");
       day.textContent = date;
-      tasks.forEach((task) => {});
+      group.appendChild(day);
+      tasks.forEach((task) => {
+        if (task.date === date) {
+          const taskItem = buildTaskView(task);
+          group.appendChild(taskItem);
+        }
+      });
+      taskList.appendChild(group);
     });
-    view.append(heading);
+    view.append(heading, taskList);
   }
 
   return { renderView };
