@@ -1,5 +1,4 @@
-import { storeProject, storeTask } from "./storage";
-import { tasksView } from "./tasks-view";
+import { localStorage, storeTask } from "./storage";
 
 export function Task(
   name,
@@ -28,6 +27,6 @@ export function createTaskFromInput(form) {
   const project = formFields.project.value || "No Project";
   const task = Task(name, notes, date, priority, project);
   storeTask.store(task);
-  storeProject.store(task.project);
+  // localStorage.storeLocal();
   return task;
 }

@@ -3,25 +3,22 @@ import { todayView } from "./today-view";
 import { tasksView } from "./tasks-view";
 import { projectView } from "./project-view";
 import { weekView } from "./week-view";
-import { storeTask, storeProject } from "./storage";
+import { storeTask, localStorage } from "./storage";
 import { format } from "date-fns";
-import { buildTaskView, buildExpandedTaskView } from "./buildTask";
 import { createTaskFromInput } from "./task";
 import { pubsub } from "./pubsub";
 
 (function ViewController() {
-  const task1 = Task("task1", "test", "2021-09-16", "!!!", "project1");
-  const task2 = Task("task2", "test", "2021-09-30", "!!!", "Project2");
   const today = format(new Date(), "yyyy-MM-dd");
-  const task3 = Task(
-    "task2",
-    "testing out this description thinggie majig blahblahblah",
-    today,
-    "!!!",
-    "project2"
-  );
+  const task1 = Task("Get out of bed", "10 more minutes", today, "!!!", "Rise");
+  const task2 = Task("TOP", "Start pomodoro", today, "!!", "Webdev");
+  const task3 = Task("Break", "2 hours break", today, "!", "Leisure");
+
   storeTask.store(task1, task2, task3);
-  storeProject.store(task1.project, task2.project, task3.project);
+
+  const tasks = localStorage.loadLocalStorage();
+  storeTask.store(...tasks);
+
   todayView.renderView();
   todayView.renderStats();
   weekView.renderStats();

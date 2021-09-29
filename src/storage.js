@@ -25,15 +25,24 @@ export const storeProject = (() => {
   return { projects, store };
 })();
 
-export const localstorage = (() => {
+export const localStorage = (() => {
   const storage = window.localStorage;
   const storageAvailable = checkStorage("localStorage") ? true : false;
+  const tasks = [];
 
-  const loadLocalStorage = () => {
-    if (storageAvailable && storage.length) {
+  function storeLocal() {
+    storage.setItem("tasks", JSON.stringify(storeTask.tasks));
+  }
+
+  function loadLocalStorage() {
+    if (storageAvailable && storage.tasks) {
+      for (const task of JSON.parse(storage["tasks"])) {
+        tasks.push(task);
+      }
     }
-  };
-  const checkStorage = (type) => {
+    return tasks;
+  }
+  function checkStorage(type) {
     let storage;
     try {
       storage = window[type];
@@ -52,7 +61,13 @@ export const localstorage = (() => {
         storage.length !== 0
       );
     }
-  };
+  }
 
-  return { loadLocalStorage, checkStorage };
+  pubsub.subscribe("taskAdded", storeLocal);
+  pubsub.subscribe("taskChecked", storeLocal);
+  pubsub.subscribe("taskUnchecked", storeLocal);
+  pubsub.subscribe("taskDeleted", storeLocal);
+  pubsub.subscribe("taskUpdated", storeLocal);
+
+  return { storeLocal, loadLocalStorage };
 })();
