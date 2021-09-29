@@ -79,6 +79,7 @@ body {
   width: clamp(1.2rem, 3vw, 1.8rem);
   height: clamp(1.2rem, 3vw, 1.8rem);
   font-size: clamp(0.8rem, 2.5vw, 1.2rem);
+  margin-right: 0.5rem;
 }
 
 .today,
@@ -323,7 +324,23 @@ form *:not(div) {
   margin: 0.5em;
 }
 
-.delete {
+.priority {
+  background-color: rgba(150, 4, 80, 0.5);
+  text-align: center;
+}
+
+.delete,
+.save:not([disabled]) {
+  cursor: pointer;
+}
+
+.delete:hover,
+.save:not([disabled]):hover {
+  opacity: 0.8;
+}
+
+.save:disabled {
+  color: gray;
 }
 
 .info-group {
@@ -339,10 +356,6 @@ form *:not(div) {
 
 .info-group:last-child {
   align-self: center;
-}
-
-button:disabled {
-  color: gray;
 }
 
 .task-short.completed {
