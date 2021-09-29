@@ -208,7 +208,8 @@ textarea {
   padding: 0 0.3rem 0 0;
 }
 
-.task-short *:nth-child(3) {
+.task-short *:nth-child(3),
+.task-short *:nth-child(2) {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -324,7 +325,7 @@ form *:not(div) {
   margin: 0.5em;
 }
 
-.priority {
+.task-expanded .priority {
   background-color: rgba(150, 4, 80, 0.5);
   text-align: center;
 }
