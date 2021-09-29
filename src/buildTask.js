@@ -54,6 +54,7 @@ export function buildTaskView(task) {
     save.disabled = true;
     const del = formClone.cancel;
     del.classList.remove("cancel");
+    del.classList.add("delete");
     del.value = "Delete";
     del.addEventListener("click", () => {
       storeTask.remove(task);

@@ -33,6 +33,9 @@ import { pubsub } from "./pubsub";
   const navIcon = document.querySelector(".nav-icon");
   navIcon.addEventListener("click", () => nav.classList.toggle("toggle"));
 
+  const todayIcon = document.querySelector(".today-icon");
+  todayIcon.textContent = format(new Date(), "d");
+
   const navBtns = document.querySelectorAll(".nav-btn");
   navBtns.forEach((btn) => btn.addEventListener("click", renderView));
 
@@ -57,10 +60,12 @@ import { pubsub } from "./pubsub";
   const container = document.querySelector(".grid-container");
 
   const cancel = document.querySelector(".cancel");
-  cancel.addEventListener("click", () => {
-    toggleForm(formOverlay, container);
-    form.reset();
-  });
+  [formOverlay, cancel].forEach((item) =>
+    item.addEventListener("click", (e) => {
+      toggleForm(formOverlay, container);
+      form.reset();
+    })
+  );
 
   const form = document.querySelector(".task-form");
   form.addEventListener("submit", function (e) {
@@ -72,6 +77,7 @@ import { pubsub } from "./pubsub";
     toggleForm(formOverlay, container);
     form.reset();
   });
+  form.addEventListener("click", (e) => e.stopPropagation());
 
   const addTaskBtns = document.querySelectorAll(".task-btn");
   addTaskBtns.forEach((btn) =>
