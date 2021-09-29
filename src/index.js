@@ -10,7 +10,6 @@ import { createTaskFromInput } from "./task";
 import { pubsub } from "./pubsub";
 
 (function ViewController() {
-  const view = document.querySelector(".view");
   const task1 = Task("task1", "test", "2021-09-16", "!!!", "project1");
   const task2 = Task("task2", "test", "2021-09-30", "!!!", "Project2");
   const today = format(new Date(), "yyyy-MM-dd");
