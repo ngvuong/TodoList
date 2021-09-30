@@ -10,10 +10,12 @@ export const weekView = (function () {
   const tasks = storeTask.tasks;
   const today = new Date();
   const weekAhead = [];
+
   for (let i = 1; i < 8; i++) {
     const date = format(addDays(today, i), "yyyy-MM-dd");
     weekAhead.push(date);
   }
+
   function renderView() {
     view.textContent = "";
     const taskList = document.createElement("div");
@@ -22,10 +24,13 @@ export const weekView = (function () {
     weekAhead.forEach((date) => {
       const group = document.createElement("div");
       group.classList.add("task-group");
+
       const day = document.createElement("div");
       day.classList.add("group-name");
       day.textContent = format(parseISO(date), "EEEE, MMM d");
+
       group.appendChild(day);
+
       tasks.forEach((task) => {
         if (task.date === date) {
           const taskItem = buildTaskView(task);

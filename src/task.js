@@ -1,5 +1,6 @@
-import { localStorage, storeTask } from "./storage";
+import { storeTask } from "./storage";
 
+// Task factory
 export function Task(
   name,
   notes,

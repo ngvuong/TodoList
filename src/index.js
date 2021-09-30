@@ -8,6 +8,7 @@ import { format } from "date-fns";
 import { createTaskFromInput } from "./task";
 import { pubsub } from "./pubsub";
 
+// Initialize and control view navigation
 (function ViewController() {
   const today = format(new Date(), "yyyy-MM-dd");
   const task1 = Task("Get out of bed", "10 more minutes", today, "!!!", "Rise");
@@ -20,12 +21,14 @@ import { pubsub } from "./pubsub";
     storeTask.store(task1, task2, task3);
   }
 
+  // Initial renders
   todayView.renderView();
   todayView.renderStats();
   weekView.renderStats();
   projectView.renderStats();
   tasksView.renderStats();
 
+  // Hamburger Icon toggling nav
   const nav = document.querySelector(".view-nav");
   const navIcon = document.querySelector(".nav-icon");
   navIcon.addEventListener("click", () => nav.classList.toggle("toggle"));
@@ -38,6 +41,7 @@ import { pubsub } from "./pubsub";
 
   document.querySelector(".today").classList.add("active");
   let currentPage = "Today";
+
   function renderView() {
     const page = this.textContent;
     if (page !== currentPage) {
@@ -55,6 +59,7 @@ import { pubsub } from "./pubsub";
   }
 })();
 
+// Control new task form toggling
 (function formController() {
   const formOverlay = document.querySelector(".form-overlay");
   const container = document.querySelector(".grid-container");
@@ -71,22 +76,19 @@ import { pubsub } from "./pubsub";
   form.addEventListener("submit", function (e) {
     e.preventDefault();
     const task = createTaskFromInput(this);
-
     pubsub.publish("taskAdded", task);
-
     toggleForm(formOverlay, container);
     form.reset();
   });
   form.addEventListener("click", (e) => e.stopPropagation());
 
-  const addTaskBtns = document.querySelectorAll(".task-btn");
-  addTaskBtns.forEach((btn) =>
-    btn.addEventListener("click", () => {
-      form.date.value = format(new Date(), "yyyy-MM-dd");
-      toggleForm(formOverlay, container);
-      document.querySelector(".task-form #name").focus();
-    })
-  );
+  const addTaskBtn = document.querySelector(".task-btn");
+  addTaskBtn.addEventListener("click", () => {
+    form.date.value = format(new Date(), "yyyy-MM-dd");
+    toggleForm(formOverlay, container);
+    document.querySelector(".task-form #name").focus();
+  });
+
   function toggleForm(content, background) {
     background.classList.toggle("blur");
     content.classList.toggle("active");

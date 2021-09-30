@@ -1,5 +1,6 @@
 import { pubsub } from "./pubsub";
 import { storeTask } from "./storage";
+// DOM manipulation
 export function buildTaskView(task) {
   const taskItem = document.createElement("div");
   const taskShort = document.createElement("div");
@@ -40,6 +41,7 @@ export function buildTaskView(task) {
   taskItem.append(taskShort, taskFull);
   taskShort.addEventListener("click", expandTask);
 
+  // Modify and use existing form
   function buildExpandedTask(task) {
     const form = document.querySelector(".task-form");
     const formClone = form.cloneNode(true);
@@ -80,6 +82,7 @@ export function buildTaskView(task) {
     return formClone;
   }
 
+  // Smooth expanding/collapsing animation
   function expandTask() {
     this.classList.toggle("hidden");
     const expanded = this.nextElementSibling;

@@ -1,3 +1,4 @@
+//Pubsub facilitates loosely coupled modules
 export const pubsub = (function () {
   const events = {};
   function subscribe(event, ...callback) {

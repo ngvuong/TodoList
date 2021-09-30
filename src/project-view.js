@@ -4,7 +4,6 @@ import { storeTask, storeProject } from "./storage";
 
 export const projectView = (function () {
   const view = document.querySelector(".view");
-  // view.textContent = "";
 
   const heading = document.createElement("h1");
   heading.textContent = "Projects";
@@ -12,9 +11,8 @@ export const projectView = (function () {
   const tasks = storeTask.tasks;
   const taskList = document.createElement("section");
   taskList.classList.add("task-list");
-  const projects = tasks.map((task) => task.project.toLowerCase());
-  // .filter((task, i) => tasks.indexOf(task) === i);
 
+  // Arrange tasks into groups by project
   function makeTasksByProject() {
     const obj = tasks.reduce((acc, task) => {
       const project = task.project.toLowerCase();
@@ -27,7 +25,8 @@ export const projectView = (function () {
 
     return obj;
   }
-  const renderView = () => {
+
+  function renderView() {
     view.textContent = "";
     taskList.textContent = "";
 
@@ -40,6 +39,7 @@ export const projectView = (function () {
       projectName.classList.add("project-name");
       project.classList.add("task-group");
       project.appendChild(projectName);
+
       tasksByProject[key].forEach((task) => {
         const taskItem = buildTaskView(task);
         project.appendChild(taskItem);
@@ -47,9 +47,9 @@ export const projectView = (function () {
       taskList.appendChild(project);
     }
     view.append(heading, taskList);
-  };
+  }
 
-  function updateView(task) {
+  function updateView() {
     const currentPage = document.querySelector(".view h1");
     if (currentPage.textContent === "Projects") {
       renderView();
@@ -61,11 +61,6 @@ export const projectView = (function () {
   function renderStats() {
     projectStats.textContent = Object.keys(makeTasksByProject()).length;
   }
-
-  // function deleteTask(task) {
-  //   renderStats();
-  //   updateView();
-  // }
 
   pubsub.subscribe("taskAdded", updateView);
   pubsub.subscribe("taskDeleted", updateView);

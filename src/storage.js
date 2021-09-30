@@ -1,4 +1,5 @@
 import { pubsub } from "./pubsub";
+
 export const storeTask = (() => {
   const tasks = [];
 
@@ -9,22 +10,7 @@ export const storeTask = (() => {
   return { tasks, store, remove };
 })();
 
-export const storeProject = (() => {
-  const projects = [];
-
-  const store = (...project) => {
-    [...project].forEach((project) => {
-      project = project.toLowerCase();
-      if (!projects.includes(project)) {
-        projects.push(project);
-      }
-    });
-    // projects.push(...project.toLowerCase());
-  };
-
-  return { projects, store };
-})();
-
+// Store and load from local storage
 export const localStorage = (() => {
   const storage = window.localStorage;
   const storageAvailable = checkStorage("localStorage") ? true : false;
@@ -63,6 +49,7 @@ export const localStorage = (() => {
     }
   }
 
+  // Save to local storage with every change event
   pubsub.subscribe("taskAdded", storeLocal);
   pubsub.subscribe("taskChecked", storeLocal);
   pubsub.subscribe("taskUnchecked", storeLocal);
