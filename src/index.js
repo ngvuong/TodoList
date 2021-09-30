@@ -31,7 +31,7 @@ import { pubsub } from "./pubsub";
   navIcon.addEventListener("click", () => nav.classList.toggle("toggle"));
 
   const todayIcon = document.querySelector(".today-icon");
-  todayIcon.textContent = format(new Date(), "d");
+  todayIcon.textContent += format(new Date(), "d");
 
   const navBtns = document.querySelectorAll(".nav-btn");
   navBtns.forEach((btn) => btn.addEventListener("click", renderView));

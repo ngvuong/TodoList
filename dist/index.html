@@ -10,13 +10,17 @@
   <body>
     <div class="grid-container">
       <header class="title">
-        TodoIt
+        <span
+          ><img src="./assets/list-task.svg" class="title-icon" />
+          TodoIt
+        </span>
         <div class="nav-icon">
           <div></div>
           <div></div>
           <div></div>
         </div>
       </header>
+
       <nav class="view-nav">
         <button class="task-btn create-btn">New Task</button>
         <div class="today">
@@ -43,12 +47,20 @@
       </nav>
       <main class="view"></main>
     </div>
+
     <div class="form-overlay">
       <form class="task-form">
         <h2>Add a New Task</h2>
         <div class="form-info">
           <div class="info-group">
-            <input id="name" type="text" name="name" placeholder="Task Name" />
+            <input
+              id="name"
+              type="text"
+              name="name"
+              placeholder="Task Name"
+              maxlength="20"
+              required
+            />
 
             <textarea
               name="notes"
@@ -56,6 +68,7 @@
               cols="20"
               rows="3"
               placeholder="Description"
+              required
             ></textarea>
 
             <input
