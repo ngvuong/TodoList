@@ -14,10 +14,11 @@ import { pubsub } from "./pubsub";
   const task2 = Task("TOP", "Start pomodoro", today, "!!", "Webdev");
   const task3 = Task("Break", "2 hours break", today, "!", "Leisure");
 
-  storeTask.store(task1, task2, task3);
-
   const tasks = localStorage.loadLocalStorage();
   storeTask.store(...tasks);
+  if (!tasks.length) {
+    storeTask.store(task1, task2, task3);
+  }
 
   todayView.renderView();
   todayView.renderStats();
@@ -42,7 +43,7 @@ import { pubsub } from "./pubsub";
       currentPage = page;
       if (page === "Today") {
         todayView.renderView();
-      } else if (page === "Week Ahead") {
+      } else if (page === "Week") {
         weekView.renderView();
       } else if (page === "Projects") {
         projectView.renderView();
