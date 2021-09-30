@@ -87,6 +87,7 @@ body {
 .week,
 .projects {
   display: flex;
+  align-items: center;
   margin: 15% 0 0 5%;
   border-bottom: 1px solid;
 }
@@ -159,11 +160,8 @@ body {
 
 select,
 input[type="date"] {
-  width: 95%;
+  /* width: 95%; */
 }
-/* form {
-  font-size: 2vmin;
-} */
 
 textarea {
   resize: none;
@@ -173,13 +171,11 @@ textarea {
   position: absolute;
   right: 1%;
   margin-top: 1%;
-  color: red;
+  color: white;
   background: none;
   border: none;
-}
-
-.save {
-  /* font-size: clamp(1rem, 2vmin, 1.5rem); */
+  font-weight: 900;
+  cursor: pointer;
 }
 
 .task-item {
@@ -192,24 +188,22 @@ textarea {
 
 .task-short {
   display: grid;
-  grid-template-columns: 2em 1fr 3fr 1em;
+  grid-template-columns: 2em 2fr 3fr 1em;
   align-items: center;
+  position: relative;
+  width: 100%;
+  height: 1.5em;
+  background-color: rgb(150, 4, 80);
   border-left: 10px double;
   margin: 0.1rem 0 0.1rem 0;
-  width: 100%;
-  background-color: rgb(150, 4, 80);
-  height: 1.5em;
-  position: relative;
-  /* border-top-right-radius: 20px;
-  border-bottom-right-radius: 20px; */
 }
 
 .task-short span {
-  padding: 0 0.3rem 0 0;
+  padding: 0 1rem 0 0;
 }
 
-.task-short *:nth-child(3),
-.task-short *:nth-child(2) {
+.task-short *:nth-child(2),
+.task-short *:nth-child(3) {
   text-overflow: ellipsis;
   white-space: nowrap;
   overflow: hidden;
@@ -315,10 +309,10 @@ textarea {
 }
 
 .task-expanded * {
-  background-color: rgba(150, 4, 80, 0.2);
-  /* border: none; */
-  font-size: clamp(1rem, 2.2vmin, 1.5rem);
   color: #e8e6e3;
+  font-size: clamp(1rem, 2.2vmin, 1.5rem);
+  background-color: rgba(150, 4, 80, 0.2);
+  border: none;
 }
 
 form *:not(div) {
