@@ -36,11 +36,14 @@ import { pubsub } from "./pubsub";
   const navBtns = document.querySelectorAll(".nav-btn");
   navBtns.forEach((btn) => btn.addEventListener("click", renderView));
 
+  document.querySelector(".today").classList.add("active");
   let currentPage = "Today";
   function renderView() {
     const page = this.textContent;
     if (page !== currentPage) {
+      document.querySelector(".view-nav div.active").classList.remove("active");
       currentPage = page;
+      this.parentNode.classList.add("active");
       if (page === "Today") {
         todayView.renderView();
       } else if (page === "Week") {
