@@ -1,4 +1,5 @@
 import { pubsub } from "./pubsub";
+import { getFirestore, addDoc, collection } from "firebase/firestore";
 
 export const storeTask = (() => {
   const tasks = [];
@@ -50,11 +51,51 @@ export const localStorage = (() => {
   }
 
   // Save to local storage with every change event
-  pubsub.subscribe("taskAdded", storeLocal);
-  pubsub.subscribe("taskChecked", storeLocal);
-  pubsub.subscribe("taskUnchecked", storeLocal);
-  pubsub.subscribe("taskDeleted", storeLocal);
-  pubsub.subscribe("taskUpdated", storeLocal);
+  function useLocal(isSignedIn) {
+    if (!isSignedIn) {
+      pubsub.subscribe("taskAdded", storeLocal);
+      pubsub.subscribe("taskChecked", storeLocal);
+      pubsub.subscribe("taskUnchecked", storeLocal);
+      pubsub.subscribe("taskDeleted", storeLocal);
+      pubsub.subscribe("taskUpdated", storeLocal);
+    } else {
+      pubsub.unsubscribe("taskAdded", storeLocal);
+      pubsub.unsubscribe("taskChecked", storeLocal);
+      pubsub.unsubscribe("taskUnchecked", storeLocal);
+      pubsub.unsubscribe("taskDeleted", storeLocal);
+      pubsub.unsubscribe("taskUpdated", storeLocal);
+    }
+  }
 
-  return { storeLocal, loadLocalStorage };
+  return { storeLocal, loadLocalStorage, useLocal };
+})();
+
+export const dbStorage = (() => {
+  async function storeDb() {
+    try {
+      await addDoc(collection(getFirestore(), "tasks"), {
+        tasks: storeTask.tasks,
+      });
+    } catch (error) {
+      console.error("Cannot write to Database", error);
+    }
+  }
+
+  function useDb(isSignedIn) {
+    if (isSignedIn) {
+      pubsub.subscribe("taskAdded", storeDb);
+      pubsub.subscribe("taskChecked", storeDb);
+      pubsub.subscribe("taskUnchecked", storeDb);
+      pubsub.subscribe("taskDeleted", storeDb);
+      pubsub.subscribe("taskUpdated", storeDb);
+    } else {
+      pubsub.unsubscribe("taskAdded", storeDb);
+      pubsub.unsubscribe("taskChecked", storeDb);
+      pubsub.unsubscribe("taskUnchecked", storeDb);
+      pubsub.unsubscribe("taskDeleted", storeDb);
+      pubsub.unsubscribe("taskUpdated", storeDb);
+    }
+  }
+
+  return { useDb };
 })();

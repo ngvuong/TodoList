@@ -3,7 +3,7 @@ import { todayView } from "./today-view";
 import { tasksView } from "./tasks-view";
 import { projectView } from "./project-view";
 import { weekView } from "./week-view";
-import { storeTask, localStorage } from "./storage";
+import { storeTask, localStorage, dbStorage } from "./storage";
 import { format } from "date-fns";
 import { createTaskFromInput } from "./task";
 import { pubsub } from "./pubsub";
@@ -16,7 +16,6 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
-import { getFireStore } from "firebase/firestore";
 
 // Initialize and control view navigation
 (function ViewController() {
@@ -52,6 +51,8 @@ import { getFireStore } from "firebase/firestore";
   }
 
   function authStateObserver(user) {
+    localStorage.useLocal(isUserSignedIn());
+    dbStorage.useDb(isUserSignedIn());
     if (user) {
       const userName = getUserName();
       userNameDisplay.textContent = userName;
@@ -77,6 +78,7 @@ import { getFireStore } from "firebase/firestore";
   signInBtn.addEventListener("click", signIn);
   signOutBtn.addEventListener("click", signOutUser);
 
+  localStorage.useLocal(isUserSignedIn());
   // Default tasks
   const today = format(new Date(), "yyyy-MM-dd");
   const task1 = Task("Get out of bed", "10 more minutes", today, "!!!", "Rise");
