@@ -34,7 +34,6 @@ body {
   justify-content: space-between;
   grid-area: header;
   max-height: 10vh;
-  font-size: clamp(3rem, 5vw, 5rem);
   background-color: rgb(180, 4, 105);
 }
 
@@ -53,10 +52,29 @@ body {
   }
 }
 
+.app-name {
+  font-size: clamp(3rem, 5vw, 5rem);
+}
+
 .title-icon {
   width: clamp(2rem, 3vw, 3rem);
   height: clamp(2rem, 3vw, 3rem);
   margin: 0 1rem 0 1rem;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.sign-in,
+.sign-out {
+  height: 2rem;
+  border-radius: 10px;
+  border: none;
+  margin-right: 1rem;
+  cursor: pointer;
+  white-space: nowrap;
 }
 
 .view-nav {
@@ -381,6 +399,16 @@ form *:not(div) {
 @media screen and (max-width: 558px) {
   .form-info {
     flex-direction: column;
+  }
+
+  .wrapper {
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 1rem;
+  }
+
+  .sign-in {
+    margin: 0;
   }
 }
 
