@@ -16,10 +16,11 @@ import {
   signInWithPopup,
   signOut,
 } from "firebase/auth";
+import { getFireStore } from "firebase/firestore";
 
 // Initialize and control view navigation
 (function ViewController() {
-  // Configure firebase
+  // Configure firebase auth
   const firebaseConfig = {
     apiKey: "AIzaSyA8kj58x3zmCQ8D2cq9nFfbeom1KtCXktg",
     authDomain: "todoit-78839.firebaseapp.com",
@@ -36,7 +37,6 @@ import {
 
   function signOutUser() {
     signOut(getAuth());
-    console.log("signed out");
   }
 
   function getUserName() {
@@ -46,10 +46,6 @@ import {
   function isUserSignedIn() {
     return !!getAuth().currentUser;
   }
-
-  if (isUserSignedIn) {
-    console.log("signed in");
-  } else console.log("signed out");
 
   function initFirebaseAuth() {
     onAuthStateChanged(getAuth(), authStateObserver);
@@ -66,6 +62,7 @@ import {
       signInBtn.setAttribute("hidden", "true");
     } else {
       userNameDisplay.setAttribute("hidden", "true");
+      userNameDisplay.textContent = "";
       signOutBtn.setAttribute("hidden", "true");
       signInBtn.removeAttribute("hidden");
     }
@@ -80,6 +77,7 @@ import {
   signInBtn.addEventListener("click", signIn);
   signOutBtn.addEventListener("click", signOutUser);
 
+  // Default tasks
   const today = format(new Date(), "yyyy-MM-dd");
   const task1 = Task("Get out of bed", "10 more minutes", today, "!!!", "Rise");
   const task2 = Task("TOP", "Start pomodoro", today, "!!", "Webdev");
