@@ -8,8 +8,78 @@ import { format } from "date-fns";
 import { createTaskFromInput } from "./task";
 import { pubsub } from "./pubsub";
 
+import { initializeApp } from "firebase/app";
+import {
+  getAuth,
+  onAuthStateChanged,
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+} from "firebase/auth";
+
 // Initialize and control view navigation
 (function ViewController() {
+  // Configure firebase
+  const firebaseConfig = {
+    apiKey: "AIzaSyA8kj58x3zmCQ8D2cq9nFfbeom1KtCXktg",
+    authDomain: "todoit-78839.firebaseapp.com",
+    projectId: "todoit-78839",
+    storageBucket: "todoit-78839.appspot.com",
+    messagingSenderId: "699370873117",
+    appId: "1:699370873117:web:298200be7a2acc21fa41f4",
+  };
+
+  async function signIn() {
+    var provider = new GoogleAuthProvider();
+    await signInWithPopup(getAuth(), provider);
+  }
+
+  function signOutUser() {
+    signOut(getAuth());
+    console.log("signed out");
+  }
+
+  function getUserName() {
+    return getAuth().currentUser.displayName;
+  }
+
+  function isUserSignedIn() {
+    return !!getAuth().currentUser;
+  }
+
+  if (isUserSignedIn) {
+    console.log("signed in");
+  } else console.log("signed out");
+
+  function initFirebaseAuth() {
+    onAuthStateChanged(getAuth(), authStateObserver);
+  }
+
+  function authStateObserver(user) {
+    if (user) {
+      const userName = getUserName();
+      userNameDisplay.textContent = userName;
+
+      userNameDisplay.removeAttribute("hidden");
+      signOutBtn.removeAttribute("hidden");
+
+      signInBtn.setAttribute("hidden", "true");
+    } else {
+      userNameDisplay.setAttribute("hidden", "true");
+      signOutBtn.setAttribute("hidden", "true");
+      signInBtn.removeAttribute("hidden");
+    }
+  }
+
+  initializeApp(firebaseConfig);
+  initFirebaseAuth();
+
+  const signInBtn = document.querySelector(".sign-in");
+  const signOutBtn = document.querySelector(".sign-out");
+  const userNameDisplay = document.querySelector(".username");
+  signInBtn.addEventListener("click", signIn);
+  signOutBtn.addEventListener("click", signOutUser);
+
   const today = format(new Date(), "yyyy-MM-dd");
   const task1 = Task("Get out of bed", "10 more minutes", today, "!!!", "Rise");
   const task2 = Task("TOP", "Start pomodoro", today, "!!", "Webdev");
