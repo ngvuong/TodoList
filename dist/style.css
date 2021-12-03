@@ -59,6 +59,20 @@ body {
   margin: 0 1rem 0 1rem;
 }
 
+.wrapper {
+  display: flex;
+  align-items: center;
+}
+
+.sign-in {
+  height: 2rem;
+  border-radius: 10px;
+  border: none;
+  margin-right: 1rem;
+  cursor: pointer;
+  white-space: nowrap;
+}
+
 .view-nav {
   grid-area: nav;
   min-height: 90vh;
@@ -381,6 +395,16 @@ form *:not(div) {
 @media screen and (max-width: 558px) {
   .form-info {
     flex-direction: column;
+  }
+
+  .wrapper {
+    flex-direction: column;
+    justify-content: center;
+    margin-right: 1rem;
+  }
+
+  .sign-in {
+    margin: 0;
   }
 }
 
