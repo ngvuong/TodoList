@@ -99,9 +99,13 @@ body {
   display: flex;
   align-items: center;
   justify-content: center;
-  background-image: url(./assets/calendar.svg);
-  background-size: cover;
   font-size: clamp(0.8rem, 2.5vw, 1.2rem);
+  position: relative;
+}
+
+.today-icon .day {
+  position: absolute;
+  top: 4px;
 }
 
 .icon {
@@ -191,7 +195,7 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  background-color: rgb(50 80 110);
+  background-color: rgb(75, 75, 75);
   margin: auto;
   border-radius: 20px;
   box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.8);

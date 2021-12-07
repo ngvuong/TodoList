@@ -1,4 +1,3 @@
-import { Task } from "./task";
 import { todayView } from "./today-view";
 import { tasksView } from "./tasks-view";
 import { projectView } from "./project-view";
@@ -49,10 +48,10 @@ import {
   function initFirebaseAuth() {
     onAuthStateChanged(getAuth(), authStateObserver);
   }
-
+  // Handle login/logout state change
   function authStateObserver(user) {
     if (user) {
-      dbStorage.useDb(user);
+      dbStorage.useDb(user, isUserSignedIn);
       dbStorage.loadDb(user);
       localStorage.useLocal(true);
 
@@ -64,7 +63,7 @@ import {
 
       signInBtn.setAttribute("hidden", "true");
     } else {
-      dbStorage.useDb(user);
+      dbStorage.useDb(user, isUserSignedIn);
       localStorage.useLocal(false);
       storeTask.reset();
       const tasks = localStorage.loadLocalStorage();
@@ -87,16 +86,10 @@ import {
   signInBtn.addEventListener("click", signIn);
   signOutBtn.addEventListener("click", signOutUser);
 
-  // pubsub.subscribe("tasksLoaded", todayView.renderView);
-
-  // Default tasks
-  // const today = format(new Date(), "yyyy-MM-dd");
-  // const task1 = Task("Get out of bed", "10 more minutes", today, "!!!", "Rise");
-  // const task2 = Task("TOP", "Start pomodoro", today, "!!", "Webdev");
-  // const task3 = Task("Break", "2 hours break", today, "!", "Leisure");
+  // Wait to check if user is signed in before deciding storage type
   setTimeout(() => {
     if (!isUserSignedIn()) {
-      dbStorage.useDb(null);
+      dbStorage.useDb(null, isUserSignedIn);
       localStorage.useLocal(isUserSignedIn());
       const tasks = localStorage.loadLocalStorage();
       storeTask.reset();
@@ -116,7 +109,7 @@ import {
   const navIcon = document.querySelector(".nav-icon");
   navIcon.addEventListener("click", () => nav.classList.toggle("toggle"));
 
-  const todayIcon = document.querySelector(".today-icon");
+  const todayIcon = document.querySelector(".today-icon .day");
   todayIcon.textContent += format(new Date(), "d");
 
   const navBtns = document.querySelectorAll(".nav-btn");

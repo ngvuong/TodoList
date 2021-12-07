@@ -80,8 +80,8 @@ export const localStorage = (() => {
 })();
 
 export const dbStorage = (() => {
-  async function storeDb(user) {
-    if (user) {
+  async function storeDb(user, isUserSignedIn) {
+    if (isUserSignedIn()) {
       const userId = user.uid;
       try {
         await setDoc(doc(getFirestore(), "tasks", `tasks${userId}`), {
@@ -105,9 +105,9 @@ export const dbStorage = (() => {
     }
   }
 
-  function useDb(user) {
+  function useDb(user, isUserSignedIn) {
     function storeUserTasks() {
-      storeDb(user);
+      storeDb(user, isUserSignedIn);
     }
     if (user) {
       pubsub.subscribe("taskAdded", storeUserTasks);
@@ -115,12 +115,6 @@ export const dbStorage = (() => {
       pubsub.subscribe("taskUnchecked", storeUserTasks);
       pubsub.subscribe("taskDeleted", storeUserTasks);
       pubsub.subscribe("taskUpdated", storeUserTasks);
-    } else {
-      pubsub.unsubscribe("taskAdded", storeUserTasks);
-      pubsub.unsubscribe("taskChecked", storeUserTasks);
-      pubsub.unsubscribe("taskUnchecked", storeUserTasks);
-      pubsub.unsubscribe("taskDeleted", storeUserTasks);
-      pubsub.unsubscribe("taskUpdated", storeUserTasks);
     }
   }
 
