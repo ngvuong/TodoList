@@ -52,8 +52,9 @@ import {
 
   function authStateObserver(user) {
     localStorage.useLocal(isUserSignedIn());
-    dbStorage.useDb(isUserSignedIn());
     if (user) {
+      dbStorage.useDb(user);
+
       const userName = getUserName();
       userNameDisplay.textContent = userName;
 
@@ -62,6 +63,8 @@ import {
 
       signInBtn.setAttribute("hidden", "true");
     } else {
+      dbStorage.useDb(null);
+
       userNameDisplay.setAttribute("hidden", "true");
       userNameDisplay.textContent = "";
       signOutBtn.setAttribute("hidden", "true");

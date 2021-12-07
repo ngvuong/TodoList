@@ -1,5 +1,5 @@
 import { pubsub } from "./pubsub";
-import { getFirestore, addDoc, collection } from "firebase/firestore";
+import { getFirestore, setDoc, collection, doc } from "firebase/firestore";
 
 export const storeTask = (() => {
   const tasks = [];
@@ -71,29 +71,39 @@ export const localStorage = (() => {
 })();
 
 export const dbStorage = (() => {
-  async function storeDb() {
-    try {
-      await addDoc(collection(getFirestore(), "tasks"), {
-        tasks: storeTask.tasks,
-      });
-    } catch (error) {
-      console.error("Cannot write to Database", error);
+  async function storeDb(user) {
+    if (user) {
+      const userId = user.uid;
+      try {
+        // const userRef = doc(getFirestore(), 'tasks', `tasks${userId}`)
+        // if(userRef) {
+        //   await updateDoc(userRef, {tasks: storeTask.tasks})
+        // } else {}
+        await setDoc(doc(getFirestore(), "tasks", `tasks${userId}`), {
+          tasks: storeTask.tasks,
+        });
+      } catch (error) {
+        console.error("Cannot write to Database", error);
+      }
     }
   }
 
-  function useDb(isSignedIn) {
-    if (isSignedIn) {
-      pubsub.subscribe("taskAdded", storeDb);
-      pubsub.subscribe("taskChecked", storeDb);
-      pubsub.subscribe("taskUnchecked", storeDb);
-      pubsub.subscribe("taskDeleted", storeDb);
-      pubsub.subscribe("taskUpdated", storeDb);
+  function useDb(user) {
+    function storeUserTasks() {
+      storeDb(user);
+    }
+    if (user) {
+      pubsub.subscribe("taskAdded", storeUserTasks);
+      pubsub.subscribe("taskChecked", storeUserTasks);
+      pubsub.subscribe("taskUnchecked", storeUserTasks);
+      pubsub.subscribe("taskDeleted", storeUserTasks);
+      pubsub.subscribe("taskUpdated", storeUserTasks);
     } else {
-      pubsub.unsubscribe("taskAdded", storeDb);
-      pubsub.unsubscribe("taskChecked", storeDb);
-      pubsub.unsubscribe("taskUnchecked", storeDb);
-      pubsub.unsubscribe("taskDeleted", storeDb);
-      pubsub.unsubscribe("taskUpdated", storeDb);
+      pubsub.unsubscribe("taskAdded", storeUserTasks);
+      pubsub.unsubscribe("taskChecked", storeUserTasks);
+      pubsub.unsubscribe("taskUnchecked", storeUserTasks);
+      pubsub.unsubscribe("taskDeleted", storeUserTasks);
+      pubsub.unsubscribe("taskUpdated", storeUserTasks);
     }
   }
 
