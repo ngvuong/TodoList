@@ -65,6 +65,7 @@ export const projectView = (function () {
   pubsub.subscribe("taskAdded", updateView);
   pubsub.subscribe("taskDeleted", updateView);
   pubsub.subscribe("taskUpdated", updateView);
+  pubsub.subscribe("tasksLoaded", updateView);
 
   return { renderView, renderStats };
 })();

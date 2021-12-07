@@ -1,14 +1,19 @@
 import { pubsub } from "./pubsub";
-import { getFirestore, setDoc, collection, doc } from "firebase/firestore";
+import { getFirestore, setDoc, getDoc, doc } from "firebase/firestore";
 
 export const storeTask = (() => {
-  const tasks = [];
+  let tasks = [];
 
   const store = (...task) => tasks.push(...task);
   const remove = (task) => {
-    tasks.splice(tasks.indexOf(task), 1);
+    tasks = tasks.filter((t) => t !== task);
   };
-  return { tasks, store, remove };
+
+  const reset = () => {
+    tasks = [];
+  };
+
+  return { tasks, store, remove, reset };
 })();
 
 // Store and load from local storage
@@ -71,6 +76,8 @@ export const localStorage = (() => {
 })();
 
 export const dbStorage = (() => {
+  let tasks = [];
+
   async function storeDb(user) {
     if (user) {
       const userId = user.uid;
@@ -85,6 +92,23 @@ export const dbStorage = (() => {
       } catch (error) {
         console.error("Cannot write to Database", error);
       }
+    }
+  }
+
+  async function loadDb(user) {
+    // const tasks = query()
+    const docRef = doc(getFirestore(), "tasks", `tasks${user.uid}`);
+    const docSnap = await getDoc(docRef);
+    console.log(docSnap.data().tasks);
+    if (docSnap.exists()) {
+      for (let task of storeTask.tasks) {
+        storeTask.remove(task);
+      }
+      storeTask.store(...docSnap.data().tasks);
+      pubsub.publish("tasksLoaded", storeTask.tasks);
+      console.log(storeTask.tasks);
+    } else {
+      console.error("Document not found");
     }
   }
 
@@ -107,5 +131,5 @@ export const dbStorage = (() => {
     }
   }
 
-  return { useDb };
+  return { useDb, loadDb };
 })();

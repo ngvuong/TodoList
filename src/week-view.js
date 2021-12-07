@@ -62,5 +62,7 @@ export const weekView = (function () {
   pubsub.subscribe("taskUnchecked", updateView);
   pubsub.subscribe("taskDeleted", updateView);
   pubsub.subscribe("taskUpdated", updateView);
+  pubsub.subscribe("tasksLoaded", updateView);
+
   return { renderView, renderStats };
 })();
