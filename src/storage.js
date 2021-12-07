@@ -23,13 +23,14 @@ export const storeTask = (() => {
 export const localStorage = (() => {
   const storage = window.localStorage;
   const storageAvailable = checkStorage("localStorage") ? true : false;
-  const tasks = [];
 
   function storeLocal() {
     storage.setItem("tasks", JSON.stringify(storeTask.tasks));
   }
 
   function loadLocalStorage() {
+    const tasks = [];
+
     if (storageAvailable && storage.tasks) {
       for (const task of JSON.parse(storage["tasks"])) {
         tasks.push(task);
@@ -79,8 +80,6 @@ export const localStorage = (() => {
 })();
 
 export const dbStorage = (() => {
-  let tasks = [];
-
   async function storeDb(user) {
     if (user) {
       const userId = user.uid;
@@ -98,10 +97,6 @@ export const dbStorage = (() => {
     const docRef = doc(getFirestore(), "tasks", `tasks${user.uid}`);
     const docSnap = await getDoc(docRef);
     if (docSnap.exists()) {
-      // for (let task of storeTask.tasks) {
-      //   storeTask.remove(task);
-      // }
-      // storeTask.remove(...storeTask.tasks);
       storeTask.reset();
       storeTask.store(...docSnap.data().tasks);
       pubsub.publish("tasksLoaded", storeTask.tasks);
