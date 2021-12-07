@@ -7,10 +7,13 @@ export const storeTask = (() => {
   const store = (...task) => tasks.push(...task);
   const remove = (task) => {
     tasks = tasks.filter((t) => t !== task);
+    storeTask.tasks = tasks;
+    pubsub.publish("taskDeleted", task);
   };
 
   const reset = () => {
     tasks = [];
+    storeTask.tasks = tasks;
   };
 
   return { tasks, store, remove, reset };
@@ -82,10 +85,6 @@ export const dbStorage = (() => {
     if (user) {
       const userId = user.uid;
       try {
-        // const userRef = doc(getFirestore(), 'tasks', `tasks${userId}`)
-        // if(userRef) {
-        //   await updateDoc(userRef, {tasks: storeTask.tasks})
-        // } else {}
         await setDoc(doc(getFirestore(), "tasks", `tasks${userId}`), {
           tasks: storeTask.tasks,
         });
@@ -96,17 +95,16 @@ export const dbStorage = (() => {
   }
 
   async function loadDb(user) {
-    // const tasks = query()
     const docRef = doc(getFirestore(), "tasks", `tasks${user.uid}`);
     const docSnap = await getDoc(docRef);
-    console.log(docSnap.data().tasks);
     if (docSnap.exists()) {
-      for (let task of storeTask.tasks) {
-        storeTask.remove(task);
-      }
+      // for (let task of storeTask.tasks) {
+      //   storeTask.remove(task);
+      // }
+      // storeTask.remove(...storeTask.tasks);
+      storeTask.reset();
       storeTask.store(...docSnap.data().tasks);
       pubsub.publish("tasksLoaded", storeTask.tasks);
-      console.log(storeTask.tasks);
     } else {
       console.error("Document not found");
     }

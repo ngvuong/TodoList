@@ -55,6 +55,7 @@ import {
     if (user) {
       dbStorage.useDb(user);
       dbStorage.loadDb(user);
+      localStorage.useLocal(true);
 
       const userName = getUserName();
       userNameDisplay.textContent = userName;
@@ -65,9 +66,11 @@ import {
       signInBtn.setAttribute("hidden", "true");
     } else {
       dbStorage.useDb(null);
-      for (let task of storeTask.tasks) {
-        storeTask.remove(task);
-      }
+      // for (let task of storeTask.tasks) {
+      //   storeTask.remove(task);
+      // }
+      localStorage.useLocal(false);
+      storeTask.reset();
       const tasks = localStorage.loadLocalStorage();
       storeTask.store(...tasks);
       pubsub.publish("tasksLoaded", tasks);
@@ -88,17 +91,22 @@ import {
   signInBtn.addEventListener("click", signIn);
   signOutBtn.addEventListener("click", signOutUser);
 
-  localStorage.useLocal(isUserSignedIn());
+  // pubsub.subscribe("tasksLoaded", todayView.renderView);
+  console.log("loaded");
+
   // Default tasks
   // const today = format(new Date(), "yyyy-MM-dd");
   // const task1 = Task("Get out of bed", "10 more minutes", today, "!!!", "Rise");
   // const task2 = Task("TOP", "Start pomodoro", today, "!!", "Webdev");
   // const task3 = Task("Break", "2 hours break", today, "!", "Leisure");
   setTimeout(() => {
-    console.log(getAuth().currentUser);
     if (!isUserSignedIn()) {
+      localStorage.useLocal(isUserSignedIn());
+      console.log(isUserSignedIn());
       const tasks = localStorage.loadLocalStorage();
+      storeTask.reset();
       storeTask.store(...tasks);
+
       pubsub.publish("tasksLoaded", tasks);
     }
   }, 500);
