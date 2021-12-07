@@ -12,12 +12,12 @@ export const todayView = (function () {
   taskList.classList.add("task-list");
 
   const today = format(new Date(), "yyyy-MM-dd");
-  const tasks = storeTask.tasks;
   const todayStats = document.querySelector(".today-stats");
 
   function renderView() {
     view.textContent = "";
     taskList.textContent = "";
+    const tasks = storeTask.tasks;
 
     for (const task of tasks) {
       renderTask(task);
@@ -32,6 +32,8 @@ export const todayView = (function () {
   }
 
   function renderStats() {
+    const tasks = storeTask.tasks;
+
     todayStats.textContent = tasks.filter(
       (task) => task.date === today && !task.completed
     ).length;
@@ -51,5 +53,6 @@ export const todayView = (function () {
   pubsub.subscribe("taskUnchecked", updateView);
   pubsub.subscribe("taskDeleted", updateView);
   pubsub.subscribe("taskUpdated", updateView);
+  pubsub.subscribe("tasksLoaded", updateView);
   return { renderView, renderStats };
 })();

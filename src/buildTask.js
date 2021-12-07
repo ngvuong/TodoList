@@ -60,7 +60,7 @@ export function buildTaskView(task) {
     del.value = "Delete";
     del.addEventListener("click", () => {
       storeTask.remove(task);
-      pubsub.publish("taskDeleted", task);
+      // pubsub.publish("taskDeleted", task);
     });
     save.addEventListener("click", (e) => {
       e.preventDefault();

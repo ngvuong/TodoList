@@ -1,26 +1,36 @@
 import { pubsub } from "./pubsub";
+import { getFirestore, setDoc, getDoc, doc } from "firebase/firestore";
 
 export const storeTask = (() => {
-  const tasks = [];
+  let tasks = [];
 
   const store = (...task) => tasks.push(...task);
   const remove = (task) => {
-    tasks.splice(tasks.indexOf(task), 1);
+    tasks = tasks.filter((t) => t !== task);
+    storeTask.tasks = tasks;
+    pubsub.publish("taskDeleted", task);
   };
-  return { tasks, store, remove };
+
+  const reset = () => {
+    tasks = [];
+    storeTask.tasks = tasks;
+  };
+
+  return { tasks, store, remove, reset };
 })();
 
 // Store and load from local storage
 export const localStorage = (() => {
   const storage = window.localStorage;
   const storageAvailable = checkStorage("localStorage") ? true : false;
-  const tasks = [];
 
   function storeLocal() {
     storage.setItem("tasks", JSON.stringify(storeTask.tasks));
   }
 
   function loadLocalStorage() {
+    const tasks = [];
+
     if (storageAvailable && storage.tasks) {
       for (const task of JSON.parse(storage["tasks"])) {
         tasks.push(task);
@@ -50,11 +60,69 @@ export const localStorage = (() => {
   }
 
   // Save to local storage with every change event
-  pubsub.subscribe("taskAdded", storeLocal);
-  pubsub.subscribe("taskChecked", storeLocal);
-  pubsub.subscribe("taskUnchecked", storeLocal);
-  pubsub.subscribe("taskDeleted", storeLocal);
-  pubsub.subscribe("taskUpdated", storeLocal);
+  function useLocal(isSignedIn) {
+    if (!isSignedIn) {
+      pubsub.subscribe("taskAdded", storeLocal);
+      pubsub.subscribe("taskChecked", storeLocal);
+      pubsub.subscribe("taskUnchecked", storeLocal);
+      pubsub.subscribe("taskDeleted", storeLocal);
+      pubsub.subscribe("taskUpdated", storeLocal);
+    } else {
+      pubsub.unsubscribe("taskAdded", storeLocal);
+      pubsub.unsubscribe("taskChecked", storeLocal);
+      pubsub.unsubscribe("taskUnchecked", storeLocal);
+      pubsub.unsubscribe("taskDeleted", storeLocal);
+      pubsub.unsubscribe("taskUpdated", storeLocal);
+    }
+  }
 
-  return { storeLocal, loadLocalStorage };
+  return { storeLocal, loadLocalStorage, useLocal };
+})();
+
+export const dbStorage = (() => {
+  async function storeDb(user) {
+    if (user) {
+      const userId = user.uid;
+      try {
+        await setDoc(doc(getFirestore(), "tasks", `tasks${userId}`), {
+          tasks: storeTask.tasks,
+        });
+      } catch (error) {
+        console.error("Cannot write to Database", error);
+      }
+    }
+  }
+
+  async function loadDb(user) {
+    const docRef = doc(getFirestore(), "tasks", `tasks${user.uid}`);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+      storeTask.reset();
+      storeTask.store(...docSnap.data().tasks);
+      pubsub.publish("tasksLoaded", storeTask.tasks);
+    } else {
+      console.error("Document not found");
+    }
+  }
+
+  function useDb(user) {
+    function storeUserTasks() {
+      storeDb(user);
+    }
+    if (user) {
+      pubsub.subscribe("taskAdded", storeUserTasks);
+      pubsub.subscribe("taskChecked", storeUserTasks);
+      pubsub.subscribe("taskUnchecked", storeUserTasks);
+      pubsub.subscribe("taskDeleted", storeUserTasks);
+      pubsub.subscribe("taskUpdated", storeUserTasks);
+    } else {
+      pubsub.unsubscribe("taskAdded", storeUserTasks);
+      pubsub.unsubscribe("taskChecked", storeUserTasks);
+      pubsub.unsubscribe("taskUnchecked", storeUserTasks);
+      pubsub.unsubscribe("taskDeleted", storeUserTasks);
+      pubsub.unsubscribe("taskUpdated", storeUserTasks);
+    }
+  }
+
+  return { useDb, loadDb };
 })();

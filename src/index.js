@@ -3,7 +3,7 @@ import { todayView } from "./today-view";
 import { tasksView } from "./tasks-view";
 import { projectView } from "./project-view";
 import { weekView } from "./week-view";
-import { storeTask, localStorage } from "./storage";
+import { storeTask, localStorage, dbStorage } from "./storage";
 import { format } from "date-fns";
 import { createTaskFromInput } from "./task";
 import { pubsub } from "./pubsub";
@@ -19,7 +19,7 @@ import {
 
 // Initialize and control view navigation
 (function ViewController() {
-  // Configure firebase
+  // Configure firebase auth
   const firebaseConfig = {
     apiKey: "AIzaSyA8kj58x3zmCQ8D2cq9nFfbeom1KtCXktg",
     authDomain: "todoit-78839.firebaseapp.com",
@@ -36,7 +36,6 @@ import {
 
   function signOutUser() {
     signOut(getAuth());
-    console.log("signed out");
   }
 
   function getUserName() {
@@ -47,16 +46,16 @@ import {
     return !!getAuth().currentUser;
   }
 
-  if (isUserSignedIn) {
-    console.log("signed in");
-  } else console.log("signed out");
-
   function initFirebaseAuth() {
     onAuthStateChanged(getAuth(), authStateObserver);
   }
 
   function authStateObserver(user) {
     if (user) {
+      dbStorage.useDb(user);
+      dbStorage.loadDb(user);
+      localStorage.useLocal(true);
+
       const userName = getUserName();
       userNameDisplay.textContent = userName;
 
@@ -65,7 +64,15 @@ import {
 
       signInBtn.setAttribute("hidden", "true");
     } else {
+      dbStorage.useDb(user);
+      localStorage.useLocal(false);
+      storeTask.reset();
+      const tasks = localStorage.loadLocalStorage();
+      storeTask.store(...tasks);
+      pubsub.publish("tasksLoaded", tasks);
+
       userNameDisplay.setAttribute("hidden", "true");
+      userNameDisplay.textContent = "";
       signOutBtn.setAttribute("hidden", "true");
       signInBtn.removeAttribute("hidden");
     }
@@ -80,16 +87,22 @@ import {
   signInBtn.addEventListener("click", signIn);
   signOutBtn.addEventListener("click", signOutUser);
 
-  const today = format(new Date(), "yyyy-MM-dd");
-  const task1 = Task("Get out of bed", "10 more minutes", today, "!!!", "Rise");
-  const task2 = Task("TOP", "Start pomodoro", today, "!!", "Webdev");
-  const task3 = Task("Break", "2 hours break", today, "!", "Leisure");
+  // pubsub.subscribe("tasksLoaded", todayView.renderView);
 
-  const tasks = localStorage.loadLocalStorage();
-  storeTask.store(...tasks);
-  if (!tasks.length) {
-    storeTask.store(task1, task2, task3);
-  }
+  // Default tasks
+  // const today = format(new Date(), "yyyy-MM-dd");
+  // const task1 = Task("Get out of bed", "10 more minutes", today, "!!!", "Rise");
+  // const task2 = Task("TOP", "Start pomodoro", today, "!!", "Webdev");
+  // const task3 = Task("Break", "2 hours break", today, "!", "Leisure");
+  setTimeout(() => {
+    if (!isUserSignedIn()) {
+      dbStorage.useDb(null);
+      localStorage.useLocal(isUserSignedIn());
+      const tasks = localStorage.loadLocalStorage();
+      storeTask.reset();
+      storeTask.store(...tasks);
+    }
+  }, 500);
 
   // Initial renders
   todayView.renderView();

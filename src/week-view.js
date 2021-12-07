@@ -31,6 +31,8 @@ export const weekView = (function () {
 
       group.appendChild(day);
 
+      const tasks = storeTask.tasks;
+
       tasks.forEach((task) => {
         if (task.date === date) {
           const taskItem = buildTaskView(task);
@@ -44,6 +46,8 @@ export const weekView = (function () {
 
   const weekStats = document.querySelector(".week-stats");
   function renderStats() {
+    const tasks = storeTask.tasks;
+
     weekStats.textContent = tasks.filter(
       (task) => weekAhead.includes(task.date) && !task.completed
     ).length;
@@ -62,5 +66,7 @@ export const weekView = (function () {
   pubsub.subscribe("taskUnchecked", updateView);
   pubsub.subscribe("taskDeleted", updateView);
   pubsub.subscribe("taskUpdated", updateView);
+  pubsub.subscribe("tasksLoaded", updateView);
+
   return { renderView, renderStats };
 })();

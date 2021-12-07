@@ -37,7 +37,7 @@ body {
   background-color: rgb(180, 4, 105);
 }
 
-.title span {
+.title .app-wrapper {
   width: 100%;
   white-space: nowrap;
   overflow: hidden;
@@ -72,7 +72,7 @@ body {
   height: 2rem;
   border-radius: 10px;
   border: none;
-  margin-right: 1rem;
+  margin: 0 1rem 0 1rem;
   cursor: pointer;
   white-space: nowrap;
 }
@@ -407,8 +407,13 @@ form *:not(div) {
     margin-right: 1rem;
   }
 
-  .sign-in {
+  .sign-in,
+  .sign-out {
     margin: 0;
+  }
+
+  .username {
+    white-space: nowrap;
   }
 }
 

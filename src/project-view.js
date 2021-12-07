@@ -8,12 +8,13 @@ export const projectView = (function () {
   const heading = document.createElement("h1");
   heading.textContent = "Projects";
 
-  const tasks = storeTask.tasks;
   const taskList = document.createElement("section");
   taskList.classList.add("task-list");
 
   // Arrange tasks into groups by project
   function makeTasksByProject() {
+    const tasks = storeTask.tasks;
+
     const obj = tasks.reduce((acc, task) => {
       const project = task.project.toLowerCase();
       if (acc[project]) {
@@ -65,6 +66,7 @@ export const projectView = (function () {
   pubsub.subscribe("taskAdded", updateView);
   pubsub.subscribe("taskDeleted", updateView);
   pubsub.subscribe("taskUpdated", updateView);
+  pubsub.subscribe("tasksLoaded", updateView);
 
   return { renderView, renderStats };
 })();
